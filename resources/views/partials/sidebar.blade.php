@@ -12,30 +12,30 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
+    {{-- <li class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
         <a class="nav-link" href="/dashboard">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
-    </li>
+    </li> --}}
 
     <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <!-- Heading -->
+    <!-- Pengajuan -->
     <div class="sidebar-heading">
-        Kasir
+        Pengajuan
     </div>
-    <li class="nav-item {{ request()->is('kasir') ? 'active' : '' }}">
-        <a class="nav-link" href="/kasir">
+    <li class="nav-item {{ request()->is('pengajuan') ? 'active' : '' }}">
+        <a class="nav-link" href="/pengajuan">
             <i class="fas fa-fw fa-table"></i>
-            <span>Kasir</span></a>
+            <span>Pengajuan</span></a>
     </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider">
 
     <!-- Heading -->
-    <div class="sidebar-heading">
+    {{-- <div class="sidebar-heading">
         Data
     </div>
     <li class="nav-item">
@@ -65,7 +65,7 @@
                 <a class="collapse-item" href="/riwayat_pembelian" actived>Riwayat Pembelian</a>
             </div>
         </div>
-    </li>
+    </li> --}}
     {{-- @if (Auth::user()->role == 'manager')
         <div class="sidebar-heading">
             User
@@ -78,7 +78,7 @@
     @endif --}}
 
     <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
+    {{-- <hr class="sidebar-divider d-none d-md-block"> --}}
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">

@@ -14,5 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('pages.admin.barang.tambah_produk');
+    return view('pages.pengajuan.show_pengajuan');
 });
