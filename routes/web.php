@@ -16,3 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('pages.pengajuan.show_pengajuan');
 });
+Route::get('/data_pengajuan', function () {
+    return view('pages.pengajuan.pengajuan');
+});

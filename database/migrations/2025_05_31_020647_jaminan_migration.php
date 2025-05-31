@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('jaminan', function (Blueprint $table) {
             $table->id('id_jaminan');
             $table->string('jaminan');
+            $table->decimal('nilai_jaminan',10, 0);
             $table->timestamps();
         });
     }

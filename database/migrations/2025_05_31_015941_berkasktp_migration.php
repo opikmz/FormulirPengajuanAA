@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('berkas_ktp', function (Blueprint $table) {
-            $table->id('id_ktp');
+        Schema::create('berkas_ktp_suami', function (Blueprint $table) {
+            $table->id('id_ktp_suami');
+            $table->string('ktp');
+            $table->timestamps();
+        });
+        Schema::create('berkas_ktp_istri', function (Blueprint $table) {
+            $table->id('id_ktp_istri');
             $table->string('ktp');
             $table->timestamps();
         });
@@ -23,6 +28,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('berkas_ktp');
+        Schema::dropIfExists('berkas_ktp_suami');
+        Schema::dropIfExists('berkas_ktp_istri');
     }
 };

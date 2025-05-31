@@ -17,17 +17,20 @@ return new class extends Migration
             $table->string('alamat');
             $table->bigInteger('jumlah_pembiayaan');
             // Relasi
-            $table->unsignedBigInteger('ceklist_id');
-            $table->foreign('ceklist_id')
-                ->references('id_ceklist')
-                ->on('ceklist')
+            $table->unsignedBigInteger('ceklis_id');
+            $table->foreign('ceklis_id')
+                ->references('id_ceklis')
+                ->on('ceklis')
                 ->onDelete('cascade');
 
             $table->unsignedBigInteger('formulir_pengajuan_id');
             $table->foreign('formulir_pengajuan_id')->references('id_formulir_pengajuan')->on('formulir_pengajuan')->onDelete('cascade');
 
-            $table->unsignedBigInteger('ktp_id');
-            $table->foreign('ktp_id')->references('id_ktp')->on('berkas_ktp')->onDelete('cascade');
+            $table->unsignedBigInteger('ktp_id_suami');
+            $table->foreign('ktp_id_suami')->references('id_ktp_suami')->on('berkas_ktp_suami')->onDelete('cascade');
+
+            $table->unsignedBigInteger('ktp_id_istri');
+            $table->foreign('ktp_id_istri')->references('id_ktp_istri')->on('berkas_ktp_istri')->onDelete('cascade');
 
             $table->unsignedBigInteger('kk_id');
             $table->foreign('kk_id')->references('id_kk')->on('berkas_kk')->onDelete('cascade');

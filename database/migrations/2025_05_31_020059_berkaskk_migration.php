@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('berkas_kk', function (Blueprint $table) {
             $table->id('id_kk');
-            $table->string('ktp');
+            $table->string('kk');
             $table->timestamps();
         });
     }

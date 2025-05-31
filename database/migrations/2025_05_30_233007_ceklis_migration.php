@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ceklist', function (Blueprint $table) {
-            $table->id('id_ceklist');
-            $table->boolean('fc_ktp');
+        Schema::create('ceklis', function (Blueprint $table) {
+            $table->id('id_ceklis');
+            $table->boolean('fc_ktp_suami');
+            $table->boolean('fc_ktp_istri');
             $table->boolean('fc_kk');
             $table->boolean('fc_data_usaha');
             $table->boolean('mutasi_rekening')->nullable();
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ceklist');
+        Schema::dropIfExists('ceklis');
     }
 };
