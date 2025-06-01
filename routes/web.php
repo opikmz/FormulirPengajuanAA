@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\pengajuanC;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('pages.pengajuan.show_pengajuan');
 });
-Route::get('/data_pengajuan', function () {
-    return view('pages.pengajuan.pengajuan');
-});
+
+Route::get('/create_pengajuan',[pengajuanC::class,'create'])->name('create_pengajuan');
+Route::post('/store_pengajuan',[pengajuanC::class,'store'])->name('store_pengajuan');

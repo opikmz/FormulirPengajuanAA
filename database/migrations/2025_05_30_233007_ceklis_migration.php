@@ -13,12 +13,18 @@ return new class extends Migration
     {
         Schema::create('ceklis', function (Blueprint $table) {
             $table->id('id_ceklis');
-            $table->boolean('fc_ktp_suami');
-            $table->boolean('fc_ktp_istri');
-            $table->boolean('fc_kk');
-            $table->boolean('fc_data_usaha');
-            $table->boolean('mutasi_rekening')->nullable();
+            $table->boolean('ceklis_ktp_suami');
+            $table->boolean('ceklis_ktp_istri');
+            $table->boolean('ceklis_kk');
+            $table->boolean('ceklis_jaminan');
+            $table->boolean('ceklis_rumah');
             
+            $table->unsignedBigInteger('pengajuan_id');
+            $table->foreign('pengajuan_id')
+                ->references('id_pengajuan')
+                ->on('pengajuan')
+                ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

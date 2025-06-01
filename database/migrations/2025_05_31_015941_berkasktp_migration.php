@@ -12,13 +12,27 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('berkas_ktp_suami', function (Blueprint $table) {
-            $table->id('id_ktp_suami');
-            $table->string('ktp');
+            $table->id('id_berkas_ktp_suami');
+            $table->string('berkas_ktp_suami');
+
+            $table->unsignedBigInteger('pengajuan_id');
+            $table->foreign('pengajuan_id')
+                ->references('id_pengajuan')
+                ->on('pengajuan')
+                ->onDelete('cascade');
+
             $table->timestamps();
         });
         Schema::create('berkas_ktp_istri', function (Blueprint $table) {
             $table->id('id_ktp_istri');
             $table->string('ktp');
+
+            $table->unsignedBigInteger('pengajuan_id');
+            $table->foreign('pengajuan_id')
+                ->references('id_pengajuan')
+                ->on('pengajuan')
+                ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

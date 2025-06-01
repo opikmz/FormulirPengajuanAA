@@ -14,6 +14,13 @@ return new class extends Migration
         Schema::create('formulir_pengajuan', function (Blueprint $table) {
             $table->id('id_formulir_pengajuan');
             $table->string('formulir_pengajuan');
+            
+            $table->unsignedBigInteger('pengajuan_id');
+            $table->foreign('pengajuan_id')
+                ->references('id_pengajuan')
+                ->on('pengajuan')
+                ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

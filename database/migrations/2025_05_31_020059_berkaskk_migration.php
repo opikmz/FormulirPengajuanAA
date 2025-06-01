@@ -14,6 +14,13 @@ return new class extends Migration
         Schema::create('berkas_kk', function (Blueprint $table) {
             $table->id('id_kk');
             $table->string('kk');
+            
+                   $table->unsignedBigInteger('pengajuan_id');
+            $table->foreign('pengajuan_id')
+                ->references('id_pengajuan')
+                ->on('pengajuan')
+                ->onDelete('cascade');
+                
             $table->timestamps();
         });
     }
