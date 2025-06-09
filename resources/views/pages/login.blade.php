@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Kasir MUHITEK</title>
+    <title>Formulir Pengajuan BMT Artha Amanah</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{asset('asset')}}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -35,7 +35,7 @@
                     <div class="card-body p-0">
                             <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Masukan Username & Passwooord!</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Masukan Username & Password!</h1>
                                     </div>
                                 <form class="user" action="/actlogin" method="POST">
                                     @csrf

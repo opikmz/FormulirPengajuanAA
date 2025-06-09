@@ -38,7 +38,7 @@
 <script>
     $(document).ready(function() {
         $('#dataTable').DataTable({
-            "scrollX": false
+            "scrollX":true
         });
         $('#dataTableRiwayatPerHari').DataTable({
             "scrollX": false

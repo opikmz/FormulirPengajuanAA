@@ -25,7 +25,7 @@ return new class extends Migration
         });
         Schema::create('berkas_ktp_istri', function (Blueprint $table) {
             $table->id('id_ktp_istri');
-            $table->string('ktp');
+            $table->string('berkas_ktp_istri');
 
             $table->unsignedBigInteger('pengajuan_id');
             $table->foreign('pengajuan_id')

@@ -38,13 +38,15 @@
         @csrf
         <div class="row mt-2 ">
             <div class="col-12 col-md-6 col-lg-4 card shadow p-0 mb-4  mx-2">
-                <div class="card-header py-2 px-4">
+                <div class="card-header ">
                     <label for="" class="m-0 text-dark font-weight-bold"> <b>Pemohon</b> </label>
                 </div>
 
                 <div class="card-body">
                     <label for="" class="m-0"> <b>Nama</b> </label>
                     <input type="text" name="nama" class="form-control mb-3" required>
+                    <input type="hidden" name="user_id" class="form-control mb-3" value="{{ Auth::user()->id_user }}">
+                    <input type="hidden" name="pengelola" class="form-control mb-3" value="{{ Auth::user()->nama }}">
 
                     <label for="" class="m-0"> <b>Alamat</b> </label>
                     <input type="text" name="alamat" class="form-control mb-3" required>
@@ -133,7 +135,12 @@
                     <label for="" class="m-0"> <b>Jaminan</b> </label>
                     <input type="text" name="jaminan" class="form-control mb-3" required>
                     <label for="" class="m-0"> <b>Nilai Jaminan</b> </label>
-                    <input type="number" name="nilai_jaminan" min="1" class="form-control mb-3" required>
+                      <div class="row m-0 ">
+                        <span class="col-2 mb-3 input-group-text" style="border-radius: 10% 0 0 10% "
+                            id="validationTooltipUsernamePrepend">RP.</span>
+                        <input type="number" name="nilai_jaminan" min="1" placeholder=""
+                            style="border-radius: 0 0.35rem 0.35rem 0 " class="col form-control mb-3" required>
+                    </div>
                 </div>
             </div>
             <div class="col-12  col-lg card shadow p-0 mb-4  mx-2">
@@ -193,12 +200,39 @@
                     <div class="col-12 col-md-6 col-lg-4">
                         <label for="" class="m-0"> <b>Struk Gaji</b> </label>
                         <div class="font-small mt-0" style="font-size:10px">Dapat memasukan lebih dari satu file </div>
-                        <input type="file" name="struk_gaji[]" class="form-control mb-3" multiple required>
+                        <input type="file" name="struk_gaji[]" class="form-control mb-3" multiple >
                     </div>
                     <div class="col-12 col-md-6 col-lg-4">
                         <label for="" class="m-0"> <b>Denah Rumah</b> </label>
                         <div class="font-small mt-0" style="font-size:10px">Dapat memasukan lebih dari satu file </div>
                         <input type="file" name="denah_rumah[]" class="form-control mb-3" multiple>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 card shadow p-0 mb-4  mx-2">
+                <div class="card-header py-2 px-4">
+                    <label for="" class="m-0 text-dark font-weight-bold"> <b>5 C</b> </label>
+                </div>
+                <div class="card-body row mx-2">
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label for="fcktpsuami" class="m-0"> <b>Character</b> </label>
+                        <input type="text" name="character" id="fcktpsuami" class="form-control mb-3">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label for="" class="m-0"> <b>Capacity</b> </label>
+                        <input type="text" name="capacity" class="form-control mb-3">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label for="" class="m-0"> <b>Capital</b> </label>
+                        <input type="text" name="capital" class="form-control mb-3" >
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label for="" class="m-0"> <b>Collateral</b> </label>
+                        <input type="text" name="collateral" class="form-control mb-3" >
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label for="" class="m-0"> <b>Condition</b> </label>
+                        <input type="text" name="condition" class="form-control mb-3">
                     </div>
                 </div>
             </div>

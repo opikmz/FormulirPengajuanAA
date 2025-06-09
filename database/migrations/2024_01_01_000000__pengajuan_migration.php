@@ -15,7 +15,14 @@ return new class extends Migration
             $table->id('id_pengajuan');
             $table->string('nama');
             $table->string('alamat');
-            $table->string('formulir_pengjuan');
+            $table->string('formulir_pengajuan');
+            $table->string('pengelola');
+            
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')
+                ->references('id_user')
+                ->on('users')
+                ->onDelete('cascade');
 
             $table->timestamps();
         });
