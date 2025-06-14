@@ -12,11 +12,11 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    {{-- <li class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
-        <a class="nav-link" href="/dashboard">
+    <li class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
+        <a class="nav-link" href="/">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
-    </li> --}}
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider">
@@ -30,6 +30,19 @@
             <i class="fas fa-fw fa-table"></i>
             <span>Pengajuan</span></a>
     </li>
+    {{--
+    <hr class="sidebar-divider"> --}}
+    @if (Auth::user()->role === 'admin')
+    <div class="sidebar-heading">
+        User
+    </div>
+    <li class="nav-item {{ request()->is('user') ? 'active' : '' }}">
+        <a class="nav-link" href="/user">
+            <i class="fas fa-fw fa-table"></i>
+            <span>User</span></a>
+    </li>
+
+    @endif
 
     <!-- Divider -->
     <hr class="sidebar-divider">
@@ -44,8 +57,8 @@
             <i class="fas fa-fw fa-folder"></i>
             <span>Tabel</span>
         </a>
-        <div id="tabel" class="collapse {{ request()->is('produk') ? 'active' : '' }}"
-            aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div id="tabel" class="collapse {{ request()->is('produk') ? 'active' : '' }}" aria-labelledby="headingPages"
+            data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Tabel</h6>
                 <a class="collapse-item" href="/produk" actived>Produk</a>
@@ -67,18 +80,19 @@
         </div>
     </li> --}}
     {{-- @if (Auth::user()->role == 'manager')
-        <div class="sidebar-heading">
-            User
-        </div>
-        <li class="nav-item {{ request()->is('user') ? 'active' : '' }}">
-            <a class="nav-link" href="/user">
-                <i class="fas fa-fw fa-table"></i>
-                <span>User</span></a>
-        </li>
+    <div class="sidebar-heading">
+        User
+    </div>
+    <li class="nav-item {{ request()->is('user') ? 'active' : '' }}">
+        <a class="nav-link" href="/user">
+            <i class="fas fa-fw fa-table"></i>
+            <span>User</span></a>
+    </li>
     @endif --}}
 
     <!-- Divider -->
-    {{-- <hr class="sidebar-divider d-none d-md-block"> --}}
+    {{--
+    <hr class="sidebar-divider d-none d-md-block"> --}}
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">

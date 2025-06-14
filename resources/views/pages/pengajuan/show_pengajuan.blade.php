@@ -16,8 +16,10 @@
                     <a href="{{ url('show_pengajuan_berkas/' . $pengajuan->id_pengajuan) }}" class="m-0 font-weight-bold text-dark active text-decoration-none ">Berkas</a>
                 </div>
                 <div class="col items-center mb-0 mt-1">
-                    <div class="btn btn-primary rounded-pill py-1">3</div>
-                    <a href="" class="m-0 font-weight-bold text-dark active text-decoration-none ">Komite</a>
+                     <a class="btn btn-primary rounded-pill  py-1" style="cursor: pointer;"
+                        href="/komite_pengajuan/{{ $pengajuan->id_pengajuan }}">3</a>
+                    <a href="{{ url('komite_pengajuan/' . $pengajuan->id_pengajuan) }}"
+                        class="m-0 font-weight-bold text-dark  text-decoration-none ">Komite</a>
                 </div>
             </div>
         </div>

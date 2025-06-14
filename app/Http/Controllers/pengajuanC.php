@@ -2,23 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\fc_kkM;
 use App\Models\limacM;
 use App\Models\ceklisM;
+use App\Models\komiteM;
 use App\Models\jaminanM;
 use App\Models\pengajuan;
 use App\Models\pengajuanM;
 use App\Models\strukGajiM;
 use App\Models\denahRumahM;
 use App\Models\pembiayaanM;
+use App\Models\pesanKomiteM;
 use Illuminate\Http\Request;
 use App\Models\berkas_jaminanM;
 use App\Models\berkas_ktp_istriM;
 use App\Models\berkas_ktp_suamiM;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use App\Models\penghasilanPengeluaranM;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use App\Models\penghasilanPengeluaranM;
 
 class pengajuanC extends Controller
 {
@@ -28,8 +32,12 @@ class pengajuanC extends Controller
     public function index()
     {
         $pengajuan = pengajuanM::get()->all();
+        $pengajuanOne = pengajuanM::where('user_id',Auth::user()->id_user)->get();
+        $userCabang = User::where('cabang',Auth::user()->cabang)->pluck('id_user');
+        $pengajuanCabang = pengajuanM::where('user_id',$userCabang)->get();
+        // dd($pengajuanCabang);
         // $jumlahPembiayaan = pembiayaanM::where('id_')->all();
-        return view('pages.pengajuan.pengajuan', compact('pengajuan'));
+        return view('pages.pengajuan.pengajuan', compact('pengajuan','pengajuanOne','pengajuanCabang'));
     }
 
     /**
@@ -140,7 +148,7 @@ class pengajuanC extends Controller
                 'user_id' => $request->user_id,
             ]);
             $pengajuanId = $pengajuan->id_pengajuan;
-            // dd('sampai sini berhasil'); x    
+            // dd('sampai sini berhasil'); x
 
             $penghasilanPengeluaran = penghasilanPengeluaranM::create([
                 'pekerjaan' => $request->pekerjaan,
@@ -198,6 +206,10 @@ class pengajuanC extends Controller
                 'pengajuan_id' => $pengajuanId,
 
             ]);
+            $komite = komiteM::create([
+                'pengajuan_id'=>$pengajuanId,
+            ]);
+
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
@@ -275,6 +287,13 @@ class pengajuanC extends Controller
         $struk_gaji = strukGajiM::where('pengajuan_id', $pengajuan->id_pengajuan)->get();
         $denah_rumah = denahRumahM::where('pengajuan_id', $pengajuan->id_pengajuan)->get();
         return view('pages.pengajuan.show_pengajuan_berkas', compact('pengajuan', 'penghasilanPengeluaran', 'pembiayaan', 'jaminan', 'ceklis', 'berkas_ktp_suami', 'berkas_jaminan', 'berkas_ktp_istri', 'berkas_kk', 'struk_gaji', 'denah_rumah'));
+    }
+
+    public function komite_pengajuan(PengajuanM $pengajuan){
+        $komite = komiteM::where('pengajuan_id',$pengajuan->id_pengajuan)->first();
+        // dd($komite->id_komite);
+        $pesanKomite = pesanKomiteM::where('komite_id',$komite->id_komite)->get();
+        return view('pages.pengajuan.komite', compact('pengajuan','komite','pesanKomite'));
     }
 
     /**

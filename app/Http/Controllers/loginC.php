@@ -18,14 +18,18 @@ class loginC extends Controller
 
         if(Auth::attempt(['username'=>$request->username, 'password'=>$request->password])){
             $request->session()->regenerate();
-            if(Auth::user()->role === 'admin'){
-                // dd('user sudah masuk dan role kedetek');
-            return redirect()->route('pengajuan');
+            // if(Auth::user()->role === 'admin'){
+            // return redirect()->route('pengajuan');
 
-            }
+            // }
+            return redirect()->route('pengajuan');
         } else {
             dd('Login Gagal');
             return redirect()->route('login');
         }
+    }
+    public function logout(){
+        Auth::logout();
+        return redirect()->route('login');
     }
 }

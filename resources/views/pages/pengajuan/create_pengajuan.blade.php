@@ -16,24 +16,6 @@
     @enderror
     <h1 class="h3 font-weight-bold mb-2 text-dark">Tambah Pengajuan</h1>
     <div class="">Pengajuan / Tambah Pengajuan</div>
-    {{-- <div class="card shadow my-3 py-2">
-        <div class="body-card">
-            <div class="row mx-10 px-3">
-                <div class="col  items-center mb-0 ">
-                    <div class="btn btn-primary rounded-pill active py-1">1</div>
-                    <a href="" class="  font-weight-bold text-dark active text-decoration-none ">Pemohon</a>
-                </div>
-                <div class="col items-center mb-0">
-                    <div class="btn btn-primary rounded-pill py-1">2</div>
-                    <a href="" class="m-0 font-weight-bold text-dark active text-decoration-none ">Berkas</a>
-                </div>
-                <div class="col items-center mb-0">
-                    <div class="btn btn-primary rounded-pill py-1">3</div>
-                    <a href="" class="m-0 font-weight-bold text-dark active text-decoration-none ">Komite</a>
-                </div>
-            </div>
-        </div>
-    </div> --}}
     <form action="/store_pengajuan" method="post" enctype="multipart/form-data">
         @csrf
         <div class="row mt-2 ">

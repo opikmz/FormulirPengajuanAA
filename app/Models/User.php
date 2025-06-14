@@ -26,6 +26,7 @@ class User extends Authenticatable
         'username',
         'role',
         'password',
+        'cabang',
     ];
     // protected $guarded = [];
 
