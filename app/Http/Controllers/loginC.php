@@ -22,10 +22,10 @@ class loginC extends Controller
             // return redirect()->route('pengajuan');
 
             // }
-            return redirect()->route('pengajuan');
+            return redirect()->route('dashbaord')->with('successLogin','Login Anda Sudah Berhasil');
         } else {
-            dd('Login Gagal');
-            return redirect()->route('login');
+            // dd('Login Gagal');
+            return redirect()->route('login')->with('failLogin','Username atau password salah');
         }
     }
     public function logout(){

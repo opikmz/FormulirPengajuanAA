@@ -32,12 +32,12 @@ class pengajuanC extends Controller
     public function index()
     {
         $pengajuan = pengajuanM::get()->all();
-        $pengajuanOne = pengajuanM::where('user_id',Auth::user()->id_user)->get();
-        $userCabang = User::where('cabang',Auth::user()->cabang)->pluck('id_user');
-        $pengajuanCabang = pengajuanM::where('user_id',$userCabang)->get();
+        $pengajuanOne = pengajuanM::where('user_id', Auth::user()->id_user)->latest()->get();
+        $userCabang = User::where('cabang', Auth::user()->cabang)->pluck('id_user');
+        $pengajuanCabang = pengajuanM::whereIn('user_id', $userCabang)->latest()->get();
         // dd($pengajuanCabang);
         // $jumlahPembiayaan = pembiayaanM::where('id_')->all();
-        return view('pages.pengajuan.pengajuan', compact('pengajuan','pengajuanOne','pengajuanCabang'));
+        return view('pages.pengajuan.pengajuan', compact('pengajuan', 'pengajuanOne', 'pengajuanCabang'));
     }
 
     /**
@@ -147,14 +147,24 @@ class pengajuanC extends Controller
                 'pengelola' => $request->pengelola,
                 'user_id' => $request->user_id,
             ]);
+
             $pengajuanId = $pengajuan->id_pengajuan;
-            // dd('sampai sini berhasil'); x
+            // dd('sampai sini berhasil');
 
             $penghasilanPengeluaran = penghasilanPengeluaranM::create([
                 'pekerjaan' => $request->pekerjaan,
                 'pendapatan' => $request->pendapatan,
                 'pengeluaran' => $request->pengeluaran,
                 'pengajuan_id' => $pengajuanId,
+            ]);
+
+            $pembiayaan = pembiayaanM::create([
+                'jumlah_pembiayaan' => $request->jumlah_pembiayaan,
+                'jangka_waktu' => $request->jangka_waktu,
+                'sistem_pengembalian' => $request->sistem_pengembalian,
+                'bentuk_pembiayaan' => $request->bentuk_pembiayaan,
+                'pengajuan_id' => $pengajuanId,
+
             ]);
 
             $jaminan = jaminanM::create([
@@ -181,21 +191,12 @@ class pengajuanC extends Controller
             ]);
 
             foreach ($berkas_jaminan as $file_berkas_jaminan) {
+
                 berkas_jaminanM::create([
                     'berkas_jaminan' => $file_berkas_jaminan,
                     'pengajuan_id' => $pengajuanId,
                 ]);
             }
-            // dd($pengajuanId);
-
-            $pembiayaan = pembiayaanM::create([
-                'jumlah_pembiayaan' => $request->jumlah_pembiayaan,
-                'jangka_waktu' => $request->jangka_waktu,
-                'sistem_pengembalian' => $request->sistem_pengembalian,
-                'bentuk_pembiayaan' => $request->bentuk_pembiayaan,
-                'pengajuan_id' => $pengajuanId,
-
-            ]);
 
             $limaC = limacM::create([
                 'character' => $request->character,
@@ -204,10 +205,10 @@ class pengajuanC extends Controller
                 'collateral' => $request->collateral,
                 'condition' => $request->condition,
                 'pengajuan_id' => $pengajuanId,
-
             ]);
+
             $komite = komiteM::create([
-                'pengajuan_id'=>$pengajuanId,
+                'pengajuan_id' => $pengajuanId,
             ]);
 
             DB::commit();
@@ -250,13 +251,13 @@ class pengajuanC extends Controller
                     'pengajuan_id' => $pengajuanId,
                 ]);
             }
-
         } catch (\Exception $e) {
             Log::error('Gagal simpan foto tambahan: ' . $e->getMessage());
         }
         // dd('gagal');
 
-        return redirect()->route('pengajuan');
+        return redirect()->route('pengajuan')
+            ->with('succesStore', 'Data berhasil disimpan');
     }
 
     /**
@@ -289,11 +290,12 @@ class pengajuanC extends Controller
         return view('pages.pengajuan.show_pengajuan_berkas', compact('pengajuan', 'penghasilanPengeluaran', 'pembiayaan', 'jaminan', 'ceklis', 'berkas_ktp_suami', 'berkas_jaminan', 'berkas_ktp_istri', 'berkas_kk', 'struk_gaji', 'denah_rumah'));
     }
 
-    public function komite_pengajuan(PengajuanM $pengajuan){
-        $komite = komiteM::where('pengajuan_id',$pengajuan->id_pengajuan)->first();
+    public function komite_pengajuan(PengajuanM $pengajuan)
+    {
+        $komite = komiteM::where('pengajuan_id', $pengajuan->id_pengajuan)->first();
         // dd($komite->id_komite);
-        $pesanKomite = pesanKomiteM::where('komite_id',$komite->id_komite)->get();
-        return view('pages.pengajuan.komite', compact('pengajuan','komite','pesanKomite'));
+        $pesanKomite = pesanKomiteM::where('komite_id', $komite->id_komite)->get();
+        return view('pages.pengajuan.komite', compact('pengajuan', 'komite', 'pesanKomite'));
     }
 
     /**
@@ -349,7 +351,7 @@ class pengajuanC extends Controller
             dd('jaminan gagal');
         }
         $jaminan = berkas_jaminanM::where('pengajuan_id', $id_pengajuan)->get();
-        foreach($jaminan as $j){
+        foreach ($jaminan as $j) {
             $path_jaminan = public_path($j->berkas_jaminan);
             if (File::exists($path_jaminan)) {
                 File::delete($path_jaminan);
@@ -358,7 +360,7 @@ class pengajuanC extends Controller
             }
         }
         $struk_gaji = strukGajiM::where('pengajuan_id', $id_pengajuan)->get();
-        foreach($struk_gaji as $sg){
+        foreach ($struk_gaji as $sg) {
             $path_sg = public_path($sg->struk_gaji);
             if (File::exists($path_sg)) {
                 File::delete($path_sg);
@@ -367,7 +369,7 @@ class pengajuanC extends Controller
             }
         }
         $denah_rumah = denahRumahM::where('pengajuan_id', $id_pengajuan)->get();
-        foreach($denah_rumah as $dr){
+        foreach ($denah_rumah as $dr) {
             $path_dr = public_path($dr->denah_rumah);
             if (File::exists($path_dr)) {
                 File::delete($path_dr);
@@ -376,7 +378,7 @@ class pengajuanC extends Controller
             }
         }
         $pengajuan->delete();
-        return redirect()->route('pengajuan');
-        // dd('data berhasil');
+        return redirect()->route('pengajuan')
+            ->with('succesDestroy', 'Data berhasil dihapus');
     }
 }

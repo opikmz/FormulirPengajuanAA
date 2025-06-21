@@ -9,7 +9,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-     @include('partials.sidebar')
+        @include('partials.sidebar')
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -19,18 +19,19 @@
             <div id="content">
 
                 <!-- Topbar -->
-               @include('partials.navbar')
+                @include('partials.navbar')
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
                 @yield('container')
+          
                 <!-- /.container-fluid -->
 
             </div>
             <!-- End of Main Content -->
 
             <!-- Footer -->
-           @include('partials.footer')
+            @include('partials.footer')
             <!-- End of Footer -->
 
         </div>
@@ -45,7 +46,7 @@
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    {{-- <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -62,10 +63,29 @@
                 </div>
             </div>
         </div>
+    </div> --}}
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content bg-transparent border-0">
+                <div class="card shadow w-lg-40 mx-auto my-3 py-3 px-3">
+                    {{-- <label for="" class="m-0 text-dark font-weight-bold"> <b>{{ $pk->nama }}</b> </label> --}}
+                    <div class="body-card ">
+                        <div class="text-center">
+                            <i class="fa-solid fa-circle-question text-danger mb-3" style=" font-size:5rem"></i>
+                            <h1 class="h3 font-weight-bold mb-2 ">logout</h1>
+                            <div class="mb-3">Apakah kamu yakin untuk logout?</div>
+                        </div>
+                        <div class="text-center">
+                            <a class="btn btn-danger" href="/logout">Logout</a>
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-@include('partials.js')
-@include('sweetalert::alert')
+    @include('partials.js')
+    @include('sweetalert::alert')
 
 
 </body>

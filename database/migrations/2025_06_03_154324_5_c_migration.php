@@ -13,18 +13,18 @@ return new class extends Migration
     {
         Schema::create('5c', function (Blueprint $table) {
             $table->id('id_5c');
-            $table->string('character');
-            $table->string('capacity');
-            $table->string('capital');
-            $table->string('collateral');
-            $table->string('condition');
+            $table->string('character')->nullable();
+            $table->string('capacity')->nullable();
+            $table->string('capital')->nullable();
+            $table->string('collateral')->nullable();
+            $table->string('condition')->nullable();
 
             $table->unsignedBigInteger('pengajuan_id');
             $table->foreign('pengajuan_id')
                 ->references('id_pengajuan')
                 ->on('pengajuan')
                 ->onDelete('cascade');
-                
+
             $table->timestamps();
         });
     }
