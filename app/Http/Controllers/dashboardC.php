@@ -14,8 +14,57 @@ class dashboardC extends Controller
 {
     public function index()
     {
-        $pengajuanTerbaru = pengajuanM::latest()->take(10)->get();
-        $pengajuanOne =  pengajuanM::where('user_id', Auth::user()->id_user);
+        if (Auth::user()->role === 'marketing') {
+            $jumlahPengajuanMarketing = pengajuanM::where('user_id', Auth::user()->id_user)
+                ->whereMonth('created_at', Carbon::now()->month)
+                ->whereYear('created_at', Carbon::now()->year)
+                ->count();
+
+            $PengajuanMarketing = pengajuanM::where('user_id', Auth::user()->id_user)->pluck('id_pengajuan');
+            $jumlahPengajuanMarketingAcc = komiteM::whereIn('pengajuan_id', $PengajuanMarketing)
+                ->where('status', 'acc')
+                ->whereMonth('created_at', Carbon::now()->month)
+                ->whereYear('created_at', Carbon::now()->year)
+                ->count();
+
+            $jumlahPengajuanMarketingNoAcc = komiteM::whereIn('pengajuan_id', $PengajuanMarketing)
+                ->where('status', 'tidak_acc')
+                ->whereMonth('created_at', Carbon::now()->month)
+                ->whereYear('created_at', Carbon::now()->year)
+                ->count();
+
+            $pengajuanMarketingTerbaru = pengajuanM::where('user_id', Auth::user()->id_user)
+                ->latest()
+                ->take(5)
+                ->get();
+
+            return view('pages.dashboard', compact(
+                'jumlahPengajuanMarketing',
+                'jumlahPengajuanMarketingAcc',
+                'jumlahPengajuanMarketingNoAcc',
+                'pengajuanMarketingTerbaru',
+            ));
+        }
+        if (Auth::user()->role === 'komite') {
+            $pengajuanTerbaru = pengajuanM::latest()->take(10)->get();
+            $jumlahPengajuan = pengajuanM::whereMonth('created_at', Carbon::now()->month)
+                ->whereYear('created_at', Carbon::now()->year)
+                ->count();
+            $jpacc = komiteM::where('status', 'acc')
+                ->whereMonth('created_at', Carbon::now()->month)
+                ->whereYear('created_at', Carbon::now()->year)
+                ->count();
+            $jpnacc = komiteM::where('status', 'tidak_acc')
+                ->whereMonth('created_at', Carbon::now()->month)
+                ->whereYear('created_at', Carbon::now()->year)
+                ->count();
+            return view('pages.dashboard', compact(
+                'pengajuanTerbaru',
+                'jumlahPengajuan',
+                'jpacc',
+                'jpnacc',
+            ));
+        }
         $jumlahPengajuan = pengajuanM::whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->count();
         $jpacc = komiteM::where('status', 'acc')->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->count();
         $jpnacc = komiteM::where('status', 'tidak_acc')->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->count();
@@ -50,32 +99,6 @@ class dashboardC extends Controller
         $jumlahPengajuanMarketingAcc = 0;
         $jumlahPengajuanMarketingNoAcc = 0;
         // $pengajuanMarketingTerbaru = [];
-
-        if (Auth::user()->role === 'marketing') {
-            $jumlahPengajuanMarketing = pengajuanM::where('user_id', Auth::user()->id_user)
-            ->whereMonth('created_at', Carbon::now()->month)
-                ->whereYear('created_at', Carbon::now()->year)
-                ->count();
-
-            $PengajuanMarketing = pengajuanM::where('user_id', Auth::user()->id_user)->pluck('id_pengajuan');
-            $jumlahPengajuanMarketingAcc = komiteM::whereIn('pengajuan_id', $PengajuanMarketing)
-                ->where('status', 'acc')
-                ->whereMonth('created_at', Carbon::now()->month)
-                ->whereYear('created_at', Carbon::now()->year)
-                ->count();
-
-            $jumlahPengajuanMarketingNoAcc = komiteM::whereIn('pengajuan_id', $PengajuanMarketing)
-                ->where('status', 'tidak_acc')
-                ->whereMonth('created_at', Carbon::now()->month)
-                ->whereYear('created_at', Carbon::now()->year)
-                ->count();
-
-                $pengajuanMarketingTerbaru = pengajuanM::where('user_id',Auth::user()->id_user)
-                ->latest()
-                ->take(5)
-                ->get();
-        }
-
         // dd($dataCabang);
         // $jpcab =
         return view('pages.dashboard', compact(

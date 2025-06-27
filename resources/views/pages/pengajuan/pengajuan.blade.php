@@ -38,16 +38,17 @@
     <div class="card shadow mb-0 my-3">
         @if (Auth::user()->role === 'admin' || Auth::user()->role === 'komite')
         <div class="card-header py-2 px-4 d-flex justify-content-between align-items-center">
-            <label for="" class="m-0 text-dark font-weight-bold"> <b>Pengajuan</b> </label>
-            @if (Auth::user()->role === 'admin')
-            <a href="/create_pengajuan" class="btn btn-primary">Tambah</a>
-            @endif
+            <div class="">
+                <label for="" class="m-0 text-dark font-weight-bold"> <b>Tabel Pengajuan</b> </label>
+                <div class="">{{ Auth::user()->nama }}</div>
+            </div>
         </div>
         <div class="card-body">
             <table class="table table-bordered mb-0" id="dataTable" width="100%" cellspacing="0">
                 <thead class="mb-0" style="margin: 0%;">
                     <tr>
-                        <th>Pengelola</th>
+                        <th>No</th>
+                        <th class="col-3">Pengelola</th>
                         <th>Nama</th>
                         <th>Alamat</th>
                         <th>Jumlah Pembiayaan</th>
@@ -61,34 +62,80 @@
                     'pengajuan_id',
                     $p->id_pengajuan,
                     )->first();
+                    $status = App\Models\komiteM::where('pengajuan_id', $p->id_pengajuan)->first();
+                    // dd($status->status)
                     @endphp
                     <tr>
-                        <td>{{ $p->pengelola }}</td>
-                        <td>{{ $p->nama }}</td>
-                        <td>{{ $p->alamat }}</td>
-                        <td>Rp.{{ $jumlahPembiyaan->jumlah_pembiayaan }}</td>
-                        {{-- <td>Tanggal</td> --}}
-                        {{-- <td>{{ $p->nama }}</td>
-                        <td>{{ $p->harga }}</td>
-                        <td>{{ $p->kode_barang }}</td>
-                        <td>{{ $p->jenis }}</td>
-                        <td>{{ $p->created_at }}</td> --}}
-                        <td>
-                            <a href="/show_pengajuan/{{ $p->id_pengajuan }}" class="btn btn-primary">Lihat</a>
-                            <a href="/destroy_pengajuan/{{ $p->id_pengajuan }}" class="btn btn-danger">hapus</a>
-                        </td>
-                        {{-- @if (Auth::user()->role == 'manager')
-                        <td>
-                            <a href="/edit_produk/{{ $p->id_barang }}" class="btn btn-primary">edit</a>
-                            <a href="/destroy_produk/{{ $p->id_barang }}" class="btn btn-danger">hapus</a>
+                        <td>{{ $loop->iteration }}</td>
+                        @if ($status->status === 'pengajuan')
+                        <td class="" style="opacity: 100%;">
+                            <div class="">
+                                {{ $p->pengelola }}
+                            </div>
+                            <span class="bg-warning rounded-pill badge text-white">Pengajuan</span>
+
                         </td>
                         @endif
-                        @if (Auth::user()->role == 'admin')
-                        <td>
-                            <a href="/edit_produk/{{ $p->id_barang }}" class="btn btn-primary">edit</a>
-                            <a href="/destroy_produk/{{ $p->id_barang }}" class="btn btn-danger">hapus</a>
+                        @if ($status->status === 'acc')
+                        <div class="">
+                            <td class=" text-dark" style="opacity: 100%;">
+                                <div class="">
+                                    {{ $p->pengelola }}
+                                </div>
+                                {{-- <div class="btn btn-primary rounded-pill">tes</div> --}}
+                                <span class="bg-primary rounded-pill badge text-white">ACC</span>
+                            </td>
+                        </div>
+                        @endif
+                        @if ($status->status === 'tidak_acc')
+                        <td class="" style="">
+                            <div class="">
+                                {{ $p->pengelola }}
+                            </div>
+                            <span class="bg-danger rounded-pill badge text-white">Tidak ACC</span>
                         </td>
-                        @endif --}}
+                        @endif
+                        <td>{{ $p->nama }}</td>
+                        <td>
+                            {{ \Illuminate\Support\Str::limit($p->alamat, 17) }}
+                        </td>
+                        <td>Rp.{{ $jumlahPembiyaan->jumlah_pembiayaan }}</td>
+                        <td>
+                            <div class="d-flex justify-content-between">
+                                <div class="bg-primary px-3  py-1 rounded-lg">
+                                    <a href="/show_pengajuan/{{ $p->id_pengajuan }}"
+                                        class="text-light font-weight-bold text-xs p-0 m-0">Lihat</a>
+                                </div>
+                                {{-- <div class="bg-danger px-3  py-1 rounded-lg">
+                                    <a href="" class="text-light font-weight-bold text-xs p-0 m-0" data-toggle="modal"
+                                        data-target="#modalDelete">hapus</a>
+                                </div> --}}
+                            </div>
+                            {{-- Modal Delete --}}
+                            <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-xl">
+                                    <div class="modal-content bg-transparent border-0">
+                                        <div class="card shadow w-lg-40 mx-auto my-3 py-3 px-3">
+                                            <div class="body-card ">
+                                                <div class="text-center">
+                                                    <i class="fa-solid fa-circle-exclamation text-danger mb-3"
+                                                        style=" font-size:5rem"></i>
+                                                    <h1 class="h3 font-weight-bold mb-2 ">Hapus</h1>
+                                                    <div class="mb-3">Apakah kamu yakin menghapus ini?</div>
+                                                </div>
+                                                <div class="text-center">
+                                                    <a class="btn btn-danger"
+                                                        href="/destroy_pengajuan/{{ $p->id_pengajuan }}">Hapus</a>
+                                                    <button class="btn btn-secondary" type="button"
+                                                        data-dismiss="modal">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

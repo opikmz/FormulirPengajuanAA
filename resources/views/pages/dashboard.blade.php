@@ -164,49 +164,73 @@
         </div>
         @endif
     </div>
+
+    {{-- Body --}}
+
     @if (Auth::user()->role === 'komite')
-    <div class="card shadow mb-0 my-3">
-        <div class="card-header py-2 px-4 d-flex justify-content-between align-items-center">
-            <label for="" class="m-0 text-dark font-weight-bold"> <b>Pengajuan Terbaru</b> </label>
-        </div>
-        <div class="card-body">
-            <table class="table table-bordered mb-0" width="100%" cellspacing="0">
-                <thead class="mb-0" style="margin: 0%;">
-                    <tr>
-                        <th>Pengelola</th>
-                        <th>Nama</th>
-                        <th>Jumlah Pembiayaan</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody class="mt-0">
-                    @foreach ($pengajuanTerbaru as $p)
+    <div class="row">
+        <div class="col-12 col-lg-5">
+            <div class="card shadow mb-0 my-3">
+                <div class="card-header py-2 px-4 d-flex justify-content-between align-items-center">
+                    <label for="" class="m-0 text-dark font-weight-bold"> <b>Pengajuan Terbaru</b> </label>
+                </div>
+                <div class="card-body">
+                    @if(empty($pengajuanTerbaru) || $pengajuanTerbaru->count() == 0)
+                    <div class="">
+                        <label for="" class="m-0 text-dark font-weight-bold"> <b>Pengajuan Tidak Ditemukan</b> </label>
+                    </div>
+                    @else
+                    @foreach ($pengajuanTerbaru as $pt)
                     @php
-                    $jumlahPembiayaanTerbaru = App\Models\pembiayaanM::where('pengajuan_id',$p->id_pengajuan)->first();
+                    $statuspt = App\Models\komiteM::where('pengajuan_id',$pt->id_pengajuan)->first();
+                    $pembiayaanpt = App\Models\pembiayaanM::where('pengajuan_id',$pt->id_pengajuan)->first();
                     @endphp
-                    <tr>
-                        <td>{{ $p->pengelola }}</td>
-                        <td>{{ $p->nama }}</td>
-                        <td>Rp.{{ $jumlahPembiayaanTerbaru->jumlah_pembiayaan }}</td>
-                        <td>
-                            <a href="/show_pengajuan/{{ $p->id_pengajuan }}" class="btn btn-primary">Lihat</a>
-                        </td>
-                        {{-- @if (Auth::user()->role == 'manager')
-                        <td>
-                            <a href="/edit_produk/{{ $p->id_barang }}" class="btn btn-primary">edit</a>
-                            <a href="/destroy_produk/{{ $p->id_barang }}" class="btn btn-danger">hapus</a>
-                        </td>
-                        @endif
-                        @if (Auth::user()->role == 'admin')
-                        <td>
-                            <a href="/edit_produk/{{ $p->id_barang }}" class="btn btn-primary">edit</a>
-                            <a href="/destroy_produk/{{ $p->id_barang }}" class="btn btn-danger">hapus</a>
-                        </td>
-                        @endif --}}
-                    </tr>
+                    <div class="list-group ">
+                        <div class="list-group-item py-2">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="col">
+                                        <div class="">
+                                            <a href="/show_pengajuan/{{ $pt->id_pengajuan }} mb-0"
+                                                class="text-xs font-weight-bold mb-1 text-dark">
+                                                {{ \Illuminate\Support\Str::limit($pt->nama, 17) }}
+                                            </a>
+                                        </div>
+                                        <div class="mt-0">
+                                            @if ($statuspt->status === 'acc')
+                                            <span class="bg-primary text-xs rounded-pill badge text-white px-2">
+                                                ACC</span>
+                                            @elseif ($statuspt->status === 'tidak_acc')
+                                            <span class="bg-danger text-xs rounded-pill badge text-white px-2">
+                                                Tidak ACC
+                                            </span>
+                                            @else
+                                            <span class="bg-warning text-xs rounded-pill badge text-white px-2">
+                                                Pengajuan
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <span class="text-xs rounded-pill text-primary">Jumlah Pengajuan</span>
+                                    <div class="text-md font-weight-bold mb-1 text-dark">
+                                        Rp.
+                                        {{-- {{$pembiayaanpmt->jumlah_pembiayaan }} --}}
+                                        {{ \Illuminate\Support\Str::limit($pembiayaanpt->jumlah_pembiayaan, 15) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- <a href="" class="text-xs font-weight-bold text-primary text-uppercase mb-1">Taufik</a>
+                        --}}
+
+                        {{-- <div class=" text-lg font-weight-bold  mb-1 text-dark">Tessss</div> --}}
+                    </div>
                     @endforeach
-                </tbody>
-            </table>
+                    @endif
+                </div>
+            </div>
         </div>
     </div>
     @endif
@@ -215,34 +239,49 @@
         <div class="col-12 col-lg-5">
             <div class="card shadow mb-0 my-3">
                 <div class="card-header py-2 px-4 d-flex justify-content-between align-items-center">
+                    
                     <label for="" class="m-0 text-dark font-weight-bold"> <b>Pengajuan Terbaru</b> </label>
                 </div>
                 <div class="card-body">
+                    @if(empty($pengajuanMarketingTerbaru) || $pengajuanMarketingTerbaru->count() == 0)
+                    <div class="">
+                        <div class="mb-2">
+                            <div class="">Sayang sekali data masih kosong</div>
+                        </div>
+                        <div class="">
+                            {{-- <label for="" class="m-0 "> Tambah Data</label> --}}
+                            <a href="create_pengajuan" class="text-light  btn btn-primary ">Tambah</a>
+                        </div>
+                    </div>
+                    @else
                     @foreach ($pengajuanMarketingTerbaru as $pmt)
                     @php
                     $statuspmt = App\Models\komiteM::where('pengajuan_id',$pmt->id_pengajuan)->first();
                     $pembiayaanpmt = App\Models\pembiayaanM::where('pengajuan_id',$pmt->id_pengajuan)->first();
                     @endphp
                     <div class="list-group ">
-                        <div class="list-group-item ">
+                        <div class="list-group-item py-2">
                             <div class="row">
                                 <div class="col-6">
                                     <div class="col">
                                         <div class="">
-                                            <a href="" class="text-xs font-weight-bold mb-1 text-dark">
+                                            <a href="/show_pengajuan/{{ $pmt->id_pengajuan }} mb-0"
+                                                class="text-xs font-weight-bold mb-1 text-dark">
                                                 {{ \Illuminate\Support\Str::limit($pmt->nama, 17) }}
                                             </a>
                                         </div>
-                                        <div class="">
+                                        <div class="mt-0">
                                             @if ($statuspmt->status === 'acc')
-                                            <span class="bg-primary text-xs rounded-pill badge text-white px-2">{{
-                                                $statuspmt->status }}</span>
+                                            <span class="bg-primary text-xs rounded-pill badge text-white px-2">
+                                                ACC</span>
                                             @elseif ($statuspmt->status === 'tidak_acc')
-                                            <span class="bg-danger text-xs rounded-pill badge text-white px-2">{{
-                                                $statuspmt->status }}</span>
+                                            <span class="bg-danger text-xs rounded-pill badge text-white px-2">
+                                                Tidak ACC
+                                            </span>
                                             @else
-                                            <span class="bg-warning text-xs rounded-pill badge text-white px-2">{{
-                                                $statuspmt->status }}</span>
+                                            <span class="bg-warning text-xs rounded-pill badge text-white px-2">
+                                                Pengajuan
+                                            </span>
                                             @endif
                                         </div>
                                     </div>
@@ -263,7 +302,7 @@
                         {{-- <div class=" text-lg font-weight-bold  mb-1 text-dark">Tessss</div> --}}
                     </div>
                     @endforeach
-
+                    @endif
                 </div>
             </div>
         </div>

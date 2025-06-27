@@ -59,7 +59,7 @@
         </div>
     </div>
     @if (Auth::user()->role === 'admin' || Auth::user()->role === 'komite')
-    <div class="modal fade" id="status_komite" tabindex="-1" aria-labelledby="status_komite" aria-hidden="true">
+    <div class="modal fade " id="status_komite" tabindex="-1" aria-labelledby="status_komite" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content bg-transparent border-0">
                 <div class="card shadow w-lg-60 mx-auto my-3 py-3 px-3">
@@ -83,12 +83,11 @@
         </div>
     </div>
     @endif 
-
     @if (count($pesanKomite) ?? [] >0)
     @foreach ($pesanKomite as $pk)
     <div class="d-flex">
         <div class="flex-wrap">
-            <div class="card shadow my-3 py-2 px-3">
+            <div class="card shadow my-1 py-2 px-3">
                 <div class="d-flex">
                     <div class="">
                         <label for="" class="m-0 text-dark font-weight-bold"> <b>{{ $pk->nama }}</b> </label>
@@ -132,17 +131,19 @@
         </div>
     </div>
     @endif
-    @if (Auth::user()->role === 'admin' || Auth::user()->role === 'komite' || Auth::user()->role === 'mancab' )
-    <form action="/store_pesan_komite/{{ $komite->id_komite }}" method="post" enctype="multipart/form-data">
-        @csrf
-        <div class="">
-            <label for="" class="m-0 text-dark font-weight-bold"> <b>Pesan Komite</b> </label>
-            <textarea class="form-control mb-3" name="pesan_komite" id="" cols="30" rows="10"></textarea>
-        </div>
-        <input type="hidden" name="nama" value="{{ Auth::user()->nama }}">
-        <button type="submit" class="btn btn-primary mb-5">Submit</button>
-    </form>
-    @endif
+    <div class="mt-3">
+        @if (Auth::user()->role === 'admin' || Auth::user()->role === 'komite' || Auth::user()->role === 'mancab' )
+        <form action="/store_pesan_komite/{{ $komite->id_komite }}" method="post" enctype="multipart/form-data">
+            @csrf
+            <div class="">
+                <label for="" class="m-0 text-dark font-weight-bold"> <b>Pesan Komite</b> </label>
+                <textarea class="form-control mb-3" name="pesan_komite" id="" cols="30" rows="10"></textarea>
+            </div>
+            <input type="hidden" name="nama" value="{{ Auth::user()->nama }}">
+            <button type="submit" class="btn btn-primary mb-5">Submit</button>
+        </form>
+        @endif
+    </div>
 </div>
 
 

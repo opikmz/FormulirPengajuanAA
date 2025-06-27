@@ -31,7 +31,7 @@ class pengajuanC extends Controller
      */
     public function index()
     {
-        $pengajuan = pengajuanM::get()->all();
+        $pengajuan = pengajuanM::latest()->get();
         $pengajuanOne = pengajuanM::where('user_id', Auth::user()->id_user)->latest()->get();
         $userCabang = User::where('cabang', Auth::user()->cabang)->pluck('id_user');
         $pengajuanCabang = pengajuanM::whereIn('user_id', $userCabang)->latest()->get();
@@ -149,7 +149,6 @@ class pengajuanC extends Controller
             ]);
 
             $pengajuanId = $pengajuan->id_pengajuan;
-            // dd('sampai sini berhasil');
 
             $penghasilanPengeluaran = penghasilanPengeluaranM::create([
                 'pekerjaan' => $request->pekerjaan,
@@ -210,6 +209,7 @@ class pengajuanC extends Controller
             $komite = komiteM::create([
                 'pengajuan_id' => $pengajuanId,
             ]);
+            // dd('sampai sini berhasil');
 
             DB::commit();
         } catch (\Exception $e) {
@@ -265,6 +265,10 @@ class pengajuanC extends Controller
      */
     public function show(pengajuanM $pengajuan)
     {
+
+        if (Auth::user()->role === 'marketing' && !$pengajuan->user_id === Auth::user()->id_user) {
+            return abort(403, 'Anda tidak memiliki akses');
+        }
         $penghasilanPengeluaran = penghasilanPengeluaranM::where('pengajuan_id', $pengajuan->id_pengajuan)->first();
         $pembiayaan = pembiayaanM::where('pengajuan_id', $pengajuan->id_pengajuan)->first();
         $jaminan = jaminanM::where('pengajuan_id', $pengajuan->id_pengajuan)->first();
@@ -272,7 +276,6 @@ class pengajuanC extends Controller
         $berkas_ktp_suami = berkas_ktp_suamiM::where('pengajuan_id', $pengajuan->id_pengajuan)->first();
         $berkas_jaminan = berkas_jaminanM::where('pengajuan_id', $pengajuan->id_pengajuan)->get();
         $limaC = limacM::where('pengajuan_id', $pengajuan->id_pengajuan)->first();
-
         return view('pages.pengajuan.show_pengajuan', compact('pengajuan', 'penghasilanPengeluaran', 'pembiayaan', 'jaminan', 'ceklis', 'berkas_ktp_suami', 'berkas_jaminan', 'limaC'));
     }
     public function show_berkas(pengajuanM $pengajuan)
