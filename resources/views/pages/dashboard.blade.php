@@ -9,56 +9,7 @@
     </div>
     @endif
     <div class="row mb-3">
-        @if (Auth::user()->role === 'komite' || Auth::user()->role === 'admin' )
-        <div class="col-12 col-lg-4 mb-2">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Jumlah Pengajuan </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $jumlahPengajuan }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-lg-4 mb-2">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Pengajuan Diterima </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $jpacc}}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-lg-4 mb-2">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Pengajuan Ditolak </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $jpnacc }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @endif
+
         @if (Auth::user()->role === 'mancab')
         <div class="col-12 col-lg-4 mb-2">
             <div class="card border-left-primary shadow h-100 py-2">
@@ -163,10 +114,61 @@
             </div>
         </div>
         @endif
+        @if (Auth::user()->role === 'admin' || Auth::user()->role === 'komite')
+        <div class="col-12 col-lg-4 mb-2">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Jumlah Pengajuan </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $jumlahPengajuan }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4 mb-2">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Pengajuan Diterima </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $jpacc}}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4 mb-2">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Pengajuan Ditolak </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $jpnacc }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
     </div>
 
-    {{-- Body --}}
 
+
+    {{-- Body --}}
     @if (Auth::user()->role === 'komite')
     <div class="row">
         <div class="col-12 col-lg-5">
@@ -191,7 +193,7 @@
                                 <div class="col-6">
                                     <div class="col">
                                         <div class="">
-                                            <a href="/show_pengajuan/{{ $pt->id_pengajuan }} mb-0"
+                                            <a href="/show_pengajuan/{{ $pt->id_pengajuan }} "
                                                 class="text-xs font-weight-bold mb-1 text-dark">
                                                 {{ \Illuminate\Support\Str::limit($pt->nama, 17) }}
                                             </a>
@@ -230,28 +232,28 @@
                     @endforeach
                     @endif
                 </div>
+
             </div>
         </div>
     </div>
     @endif
     @if (Auth::user()->role === 'marketing')
     <div class="row">
-        <div class="col-12 col-lg-5">
+        <div class="col-12 col-lg-6">
             <div class="card shadow mb-0 my-3">
                 <div class="card-header py-2 px-4 d-flex justify-content-between align-items-center">
-                    
+
                     <label for="" class="m-0 text-dark font-weight-bold"> <b>Pengajuan Terbaru</b> </label>
                 </div>
                 <div class="card-body">
                     @if(empty($pengajuanMarketingTerbaru) || $pengajuanMarketingTerbaru->count() == 0)
                     <div class="">
                         <div class="mb-2">
-                            <div class="">Sayang sekali data masih kosong</div>
+                            <div class="">Data tidak ditemukan</div>
                         </div>
-                        <div class="">
-                            {{-- <label for="" class="m-0 "> Tambah Data</label> --}}
-                            <a href="create_pengajuan" class="text-light  btn btn-primary ">Tambah</a>
-                        </div>
+                        {{-- <div class="">
+                            <a href="create_pengajuan" class="">Tambah</a>
+                        </div> --}}
                     </div>
                     @else
                     @foreach ($pengajuanMarketingTerbaru as $pmt)
@@ -265,7 +267,7 @@
                                 <div class="col-6">
                                     <div class="col">
                                         <div class="">
-                                            <a href="/show_pengajuan/{{ $pmt->id_pengajuan }} mb-0"
+                                            <a href="/show_pengajuan/{{ $pmt->id_pengajuan }}"
                                                 class="text-xs font-weight-bold mb-1 text-dark">
                                                 {{ \Illuminate\Support\Str::limit($pmt->nama, 17) }}
                                             </a>
@@ -304,7 +306,55 @@
                     @endforeach
                     @endif
                 </div>
+
             </div>
+        </div>
+        <div class="col-12 col-lg-6">
+
+            <div class="card shadow my-3">
+                <div class="card-header py-2 px-4 d-flex justify-content-between align-items-center">
+                    <label for="" class="m-0 text-dark font-weight-bold"> <b>Pesan Komite Terbaru</b> </label>
+                </div>
+                <div class="card-body">
+                    @if(empty($pesanKomiteTerbaru) || $pesanKomiteTerbaru->count() == 0)
+                    <div class="">
+                        <label for="" class="m-0 text-dark font-weight-bold"> <b>Pesan Tidak Ditemukan</b> </label>
+                    </div>
+                    @else
+                    @foreach ($pesanKomiteTerbaru as $pkt)
+
+                    <div class="list-group ">
+                        <div class="list-group-item py-2">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="col">
+                                        <div class="">
+                                            <a href="/show_pengajuan/" class="text-xs font-weight-bold mb-1 text-dark">
+                                                {{ \Illuminate\Support\Str::limit($pkt->nama, 17) }}
+                                            </a>
+                                            <div class="text-xs">{{ \Illuminate\Support\Str::limit($pkt->pesan_komite, 20) }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- <div class="col-6">
+                                    <span class="text-xs rounded-pill text-primary">Jumlah Pengajuan</span>
+                                    <div class="text-md font-weight-bold mb-1 text-dark">
+                                        Rp.
+                                        {{ \Illuminate\Support\Str::limit($pembiayaanpt->jumlah_pembiayaan, 15) }}
+                                    </div>
+                                </div> --}}
+                            </div>
+                        </div>
+                        {{-- <a href="" class="text-xs font-weight-bold text-primary text-uppercase mb-1">Taufik</a>
+                        --}}
+
+                        {{-- <div class=" text-lg font-weight-bold  mb-1 text-dark">Tessss</div> --}}
+                    </div>
+                    @endforeach
+                    @endif
+                </div>
+            </div>
+
         </div>
 
     </div>

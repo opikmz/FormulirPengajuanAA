@@ -52,7 +52,7 @@
                     <div class="row m-0 ">
                         <span class="col-2 mb-3 input-group-text" style="border-radius: 10% 0 0 10% "
                             id="validationTooltipUsernamePrepend">RP.</span>
-                        <input type="number" name="pendapatan" min="1" placeholder="Laba bersih per-bulan"
+                        <input type="number" name="pendapatan" min="1" placeholder="Penghasilan per-bulan"
                             style="border-radius: 0 0.35rem 0.35rem 0 " class="col form-control mb-3" required>
                     </div>
 
@@ -121,7 +121,7 @@
                         <span class="col-2 mb-3 input-group-text" style="border-radius: 10% 0 0 10% "
                             id="validationTooltipUsernamePrepend">RP.</span>
                         <input type="number" name="nilai_jaminan" min="1" placeholder=""
-                            style="border-radius: 0 0.35rem 0.35rem 0 " class="col form-control mb-3" required>
+                            style="border-radius: 0 0.35rem 0.35rem 0 " class="col form-control mb-3">
                     </div>
                 </div>
             </div>
@@ -176,17 +176,17 @@
                     </div>
                     <div class="col-12 col-md-6 col-lg-4">
                         <label for="" class="m-0"> <b>Jaminan</b> </label>
-                        <div class="font-small mt-0" style="font-size:10px">Dapat memasukan lebih dari satu file </div>
+                        {{-- <div class="font-small mt-0" style="font-size:10px">Dapat memasukan lebih dari satu file </div> --}}
                         <input type="file" name="berkas_jaminan[]" class="form-control mb-3" multiple required>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4">
                         <label for="" class="m-0"> <b>Struk Gaji</b> </label>
-                        <div class="font-small mt-0" style="font-size:10px">Dapat memasukan lebih dari satu file </div>
+                        {{-- <div class="font-small mt-0" style="font-size:10px">Dapat memasukan lebih dari satu file </div> --}}
                         <input type="file" name="struk_gaji[]" class="form-control mb-3" multiple >
                     </div>
                     <div class="col-12 col-md-6 col-lg-4">
                         <label for="" class="m-0"> <b>Denah Rumah</b> </label>
-                        <div class="font-small mt-0" style="font-size:10px">Dapat memasukan lebih dari satu file </div>
+                        {{-- <div class="font-small mt-0" style="font-size:10px">Dapat memasukan lebih dari satu file </div> --}}
                         <input type="file" name="denah_rumah[]" class="form-control mb-3" multiple>
                     </div>
                 </div>

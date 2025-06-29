@@ -30,11 +30,11 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12 col-lg-3">
+        <div class="col-12 col-lg-3 ">
             <div class="">
                 <label for="" class="m-0 text-dark font-weight-bold"> <b>Pengajuan</b> </label>
             </div>
-            <div class="image-hover-container mb-3" style="height: 20rem; width:15rem; cursor: pointer;" data-bs-toggle="modal"
+            <div class="image-hover-container mb-3 rounded overflow-hidden" style="height: 20rem; width:15rem; cursor: pointer;" data-bs-toggle="modal"
                 data-bs-target="#FormulirPengajuan">
 
                 <img src="{{ asset($pengajuan->formulir_pengajuan) }}" alt="Formulir Pengajuan"
@@ -59,7 +59,7 @@
             <div class="">
                 <label for="" class="m-0 text-dark font-weight-bold"> <b>KTP Suami</b> </label>
             </div>
-            <div class="image-hover-container" style="height: 20rem; width:15rem; cursor: pointer; "
+            <div class="image-hover-container rounded overflow-hidden" style="height: 20rem; width:15rem; cursor: pointer; "
                 data-bs-target="#berkas_ktp_suami" data-bs-toggle="modal">
 
                 <img src="{{ asset($berkas_ktp_suami->berkas_ktp_suami) }}" class="d-block mb-3 "
@@ -87,7 +87,7 @@
               <label for="" class="m-0 text-dark font-weight-bold"> <b>KTP Istri</b> </label>
           </div>
 
-          <div class="image-hover-container mb-3" style="height: 20rem; width:15rem; cursor: pointer; "
+          <div class="image-hover-container mb-3 rounded overflow-hidden" style="height: 20rem; width:15rem; cursor: pointer; "
               data-bs-target="#berkas_ktp_istri" data-bs-toggle="modal">
 
               <img src="{{ asset($berkas_ktp_istri->berkas_ktp_istri) }}" class="d-block mb-3 "
@@ -113,7 +113,7 @@
             <div class="">
                 <label for="" class="m-0 text-dark font-weight-bold"> <b>KK</b> </label>
             </div>
-            <div class="image-hover-container mb-3" style="height: 20rem; width:15rem; cursor: pointer; "
+            <div class="image-hover-container mb-3 rounded overflow-hidden" style="height: 20rem; width:15rem; cursor: pointer; "
                 data-bs-target="#berkas_kk" data-bs-toggle="modal">
 
                 <img src="{{ asset($berkas_kk->kk) }}" class="d-block mb-3 "
@@ -142,7 +142,7 @@
             @php
             $modalIdBerkasJaminan = 'modal_' . md5($bj->berkas_jaminan);
             @endphp
-            <div class="image-hover-container mb-3" style="height: 20rem; width:15rem; cursor: pointer; "
+            <div class="image-hover-container mb-3 rounded overflow-hidden" style="height: 20rem; width:15rem; cursor: pointer; "
                 data-bs-target="#{{ $modalIdBerkasJaminan }}" data-bs-toggle="modal">
 
                 <img src="{{ asset($bj->berkas_jaminan) }}" class="d-block mb-3 "
@@ -172,7 +172,7 @@
             @php
             $modalIdStrukGaji = 'modal_' . md5($sg->struk_gaji);
             @endphp
-            <div class="image-hover-container mb-3" style="height: 20rem; width:15rem; cursor: pointer; "
+            <div class="image-hover-container mb-3 rounded overflow-hidden" style="height: 20rem; width:15rem; cursor: pointer; "
                 data-bs-target="#{{ $modalIdStrukGaji }}" data-bs-toggle="modal">
 
                 <img src="{{ asset($sg->struk_gaji) }}" class="d-block mb-3 " style="height: 20rem; width:15rem; object-fit: cover;"
@@ -203,7 +203,7 @@
             @php
             $modalldIDenahRumah = 'modal_' . md5($dr->denah_rumah);
             @endphp
-            <div class="image-hover-container mb-3" style="height: 20rem; width:15rem; cursor: pointer; "
+            <div class="image-hover-container mb-3 rounded overflow-hidden" style="height: 20rem; width:15rem; cursor: pointer; "
                 data-bs-target="#{{$modalldIDenahRumah}}" data-bs-toggle="modal">
 
                 <img src="{{ asset($dr->denah_rumah) }}" class="d-block mb-3 " style="height: 20rem; width:15rem; object-fit: cover;"

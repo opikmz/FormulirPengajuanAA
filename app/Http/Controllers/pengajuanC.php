@@ -77,7 +77,7 @@ class pengajuanC extends Controller
             'bentuk_pembiayaan' => 'required',
 
             'jaminan' => 'required',
-            'nilai_jaminan' => 'required',
+            'nilai_jaminan' => 'nullable',
 
             'ceklis_ktp_suami' => 'nullable|boolean',
             'ceklis_ktp_istri' => 'nullable|boolean',
@@ -104,7 +104,7 @@ class pengajuanC extends Controller
             'colleteral' => 'nullable',
             'condition' => 'nullable',
         ]);
-
+        // dd('samapai disi berhasil');
         // Ngecek ada Formulir pengajuan ktp suami & istri
         // Formulir
         if (!$request->hasFile('formulir_pengajuan')) {
@@ -114,6 +114,7 @@ class pengajuanC extends Controller
         if (!$request->hasFile('ktp_suami') && !$request->hasFile('ktp_istri')) {
             return back()->withErrors(['error' => 'Masukan minimal salah satu KTP'])->withInput();
         }
+
         try {
             DB::beginTransaction();
             $formulir_pengajuan = $this->saveFile($request->file('formulir_pengajuan'), 'formulir_pengajuan');
@@ -170,7 +171,6 @@ class pengajuanC extends Controller
                 'jaminan' => $request->jaminan,
                 'nilai_jaminan' => $request->nilai_jaminan,
                 'pengajuan_id' => $pengajuanId,
-
             ]);
 
             $ceklis = ceklisM::create([
@@ -183,6 +183,33 @@ class pengajuanC extends Controller
                 'pengajuan_id' => $pengajuanId,
 
             ]);
+
+            $querylimac = [
+                $request->character,
+                $request->capacity,
+                $request->capital,
+                $request->colleteral,
+                $request->condition
+            ];
+            if (count(array_filter($querylimac)) > 0) {
+                $limaC = limacM::create([
+                    'character' => $request->character,
+                    'capacity' => $request->capacity,
+                    'capital' => $request->capital,
+                    'collateral' => $request->collateral,
+                    'condition' => $request->condition,
+                    'pengajuan_id' => $pengajuanId,
+                ]);
+            } else {
+                $limaC = limacM::create([
+                    'character' => null,
+                    'capacity' => null,
+                    'capital' => null,
+                    'collateral' => null,
+                    'condition' => null,
+                    'pengajuan_id' => $pengajuanId,
+                ]);
+            }
 
             $fc_kk = fc_kkM::create([
                 'kk' => $kk,
@@ -197,14 +224,6 @@ class pengajuanC extends Controller
                 ]);
             }
 
-            $limaC = limacM::create([
-                'character' => $request->character,
-                'capacity' => $request->capacity,
-                'capital' => $request->capital,
-                'collateral' => $request->collateral,
-                'condition' => $request->condition,
-                'pengajuan_id' => $pengajuanId,
-            ]);
 
             $komite = komiteM::create([
                 'pengajuan_id' => $pengajuanId,
@@ -216,7 +235,6 @@ class pengajuanC extends Controller
             DB::rollBack();
             return back()->withErrors(['error' => 'Terjadi kesalahan saat menyimpan data.'])->withInput();
         }
-
         try {
             $berkas_ktp_istri = berkas_ktp_istriM::create([
                 'berkas_ktp_istri' => $ktp_istri,
@@ -225,6 +243,7 @@ class pengajuanC extends Controller
         } catch (\Exception $e) {
             Log::error('Gagal simpan foto tambahan: ' . $e->getMessage());
         }
+
         try {
             $berkas_ktp_suami = berkas_ktp_suamiM::create([
                 'berkas_ktp_suami' => $ktp_suami,
@@ -233,6 +252,7 @@ class pengajuanC extends Controller
         } catch (\Exception $e) {
             Log::error('Gagal simpan foto tambahan: ' . $e->getMessage());
         }
+
         try {
             foreach ($struk_gaji as $file) {
                 strukGajiM::create([
@@ -244,6 +264,7 @@ class pengajuanC extends Controller
         } catch (\Exception $e) {
             Log::error('Gagal simpan foto tambahan: ' . $e->getMessage());
         }
+
         try {
             foreach ($denah_rumah as $file) {
                 denahRumahM::create([
@@ -254,6 +275,7 @@ class pengajuanC extends Controller
         } catch (\Exception $e) {
             Log::error('Gagal simpan foto tambahan: ' . $e->getMessage());
         }
+
         // dd('gagal');
 
         return redirect()->route('pengajuan')
@@ -265,8 +287,11 @@ class pengajuanC extends Controller
      */
     public function show(pengajuanM $pengajuan)
     {
-
-        if (Auth::user()->role === 'marketing' && !$pengajuan->user_id === Auth::user()->id_user) {
+        // dd($pengajuan->user_id);
+        if (
+            Auth::user()->role === 'marketing'
+            && $pengajuan->user_id !== Auth::user()->id_user
+        ) {
             return abort(403, 'Anda tidak memiliki akses');
         }
         $penghasilanPengeluaran = penghasilanPengeluaranM::where('pengajuan_id', $pengajuan->id_pengajuan)->first();
@@ -276,7 +301,23 @@ class pengajuanC extends Controller
         $berkas_ktp_suami = berkas_ktp_suamiM::where('pengajuan_id', $pengajuan->id_pengajuan)->first();
         $berkas_jaminan = berkas_jaminanM::where('pengajuan_id', $pengajuan->id_pengajuan)->get();
         $limaC = limacM::where('pengajuan_id', $pengajuan->id_pengajuan)->first();
-        return view('pages.pengajuan.show_pengajuan', compact('pengajuan', 'penghasilanPengeluaran', 'pembiayaan', 'jaminan', 'ceklis', 'berkas_ktp_suami', 'berkas_jaminan', 'limaC'));
+        if (!$limaC) {
+            $limaC = [];
+        };
+
+        return view(
+            'pages.pengajuan.show_pengajuan',
+            compact(
+                'pengajuan',
+                'penghasilanPengeluaran',
+                'pembiayaan',
+                'jaminan',
+                'ceklis',
+                'berkas_ktp_suami',
+                'berkas_jaminan',
+                'limaC'
+            )
+        );
     }
     public function show_berkas(pengajuanM $pengajuan)
     {

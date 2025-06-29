@@ -30,9 +30,6 @@
         </div>
     </div>
     @enderror
-    <!-- Page Heading -->
-    <h1 class="h3 font-weight-bold mb-2 text-dark">Pengajuan</h1>
-    <div class="">Pengajuan</div>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-0 my-3">
@@ -40,7 +37,7 @@
         <div class="card-header py-2 px-4 d-flex justify-content-between align-items-center">
             <div class="">
                 <label for="" class="m-0 text-dark font-weight-bold"> <b>Tabel Pengajuan</b> </label>
-                <div class="">{{ Auth::user()->nama }}</div>
+                <div class="">Terbaru</div>
             </div>
         </div>
         <div class="card-body">

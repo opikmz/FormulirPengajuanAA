@@ -2,8 +2,8 @@
 @section('container')
 <div class="container-fluid">
 
-    <h1 class="h3 font-weight-bold mb-2 text-dark">Lihat Pengajuan</h1>
-    <div class="">Pengajuan / Lihat Pengajuan</div>
+    {{-- <h1 class="h3 font-weight-bold mb-2 text-dark">Lihat Pengajuan</h1>
+    <div class="">Pengajuan / Lihat Pengajuan</div> --}}
     <div class="card shadow my-3 py-2">
         <div class="body-card">
             <div class="row mx-10 px-3">

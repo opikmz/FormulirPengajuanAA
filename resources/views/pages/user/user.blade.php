@@ -14,10 +14,6 @@
         </div>
     </div>
     @enderror
-    <!-- Page Heading -->
-        <h1 class="h3 font-weight-bold mb-2 text-dark">User</h1>
-    <div class="">User</div>
-
     <!-- DataTales Example -->
     <div class="card shadow mb-0 my-3">
         <div class="card-header py-2 px-4 d-flex justify-content-between align-items-center">
