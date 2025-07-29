@@ -15,7 +15,7 @@ class userC extends Controller
     public function index()
     {
         $user = User::get()->all();
-        return view('pages.user.user',compact('user'));
+        return view('pages.user.user', compact('user'));
     }
 
     /**
@@ -32,18 +32,18 @@ class userC extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama'=>'required',
-            'username'=>'required',
-            'password'=>'required',
-            'role'=>'required',
-            'cabang'=>'required',
+            'nama' => 'required',
+            'username' => 'required',
+            'password' => 'required',
+            'role' => 'required',
+            'cabang' => 'required',
         ]);
         $user = User::create([
-            'nama'=>$request->nama,
-            'username'=>$request->username,
-            'password'=> Hash::make($request->password),
-            'role'=>$request->role,
-            'cabang'=>$request->cabang,
+            'nama' => $request->nama,
+            'username' => $request->username,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+            'cabang' => $request->cabang,
         ]);
 
         return redirect()->route('user');
@@ -60,9 +60,9 @@ class userC extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(user $user)
     {
-        //
+        return view('pages.user.edit_user', compact('user'));
     }
 
     /**
@@ -70,9 +70,31 @@ class userC extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'nama' => 'required',
+            'username' => 'required|unique:users,username,'.$user->id_user.',id_user',
+            'role' => 'required',
+            'cabang' => 'required',
+        ]);
+        $user->update([
+            'nama' => $request->nama,
+            'username' => $request->username,
+            'role' => $request->role,
+            'cabang' => $request->cabang,
+        ]);
+        return redirect()->route('user')->with('success', 'Data berhasil diubah');
     }
 
+    public function update_password(Request $request, User $user)
+    {
+        $request->validate([
+            'password' => 'required',
+        ]);
+        $user->update([
+            'password' => Hash::make($request->password),
+        ]);
+        return redirect()->route('user')->with('success', 'Data berhasil diubah');
+    }
     /**
      * Remove the specified resource from storage.
      */

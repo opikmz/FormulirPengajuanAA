@@ -104,7 +104,6 @@ class pengajuanC extends Controller
             'colleteral' => 'nullable',
             'condition' => 'nullable',
         ]);
-        // dd('samapai disi berhasil');
         // Ngecek ada Formulir pengajuan ktp suami & istri
         // Formulir
         if (!$request->hasFile('formulir_pengajuan')) {
@@ -117,27 +116,45 @@ class pengajuanC extends Controller
 
         try {
             DB::beginTransaction();
+            $deleteFile = [];
+
             $formulir_pengajuan = $this->saveFile($request->file('formulir_pengajuan'), 'formulir_pengajuan');
+            $deleteFile[] = $formulir_pengajuan;
 
             $ktp_suami = $request->hasFile('ktp_suami') ? $this->saveFile($request->file('ktp_suami'), 'ktp_suami') : null;
+            if ($ktp_suami) {
+                $deleteFile[] = $ktp_suami;
+            }
             $ktp_istri = $request->hasFile('ktp_istri') ? $this->saveFile($request->file('ktp_istri'), 'ktp_istri') : null;
+            if ($ktp_istri) {
+                $deleteFile[] = $ktp_istri;
+            }
+
             $kk = $this->saveFile($request->file('kk'), 'kk');
+            $deleteFile[] = $kk;
+
             $berkas_jaminan = [];
             foreach ($request->file('berkas_jaminan') as $file) {
-                $berkas_jaminan[] = $this->saveFile($file, 'berkas_jaminan');
+                $savedbj = $this->saveFile($file, 'berkas_jaminan');
+                $berkas_jaminan[] = $savedbj;
+                $deleteFile[] = $savedbj;
             }
 
             $struk_gaji = [];
             if ($request->hasFile('struk_gaji')) {
                 foreach ($request->file('struk_gaji') as $file) {
-                    $struk_gaji[] = $this->saveFile($file, 'struk_gaji');
+                    $savedsg = $this->saveFile($file, 'struk_gaji');
+                    $struk_gaji[] = $savedsg;
+                    $deleteFile[] = $savedsg;
                 }
             }
 
             $denah_rumah = [];
             if ($request->hasFile('denah_rumah')) {
                 foreach ($request->file('denah_rumah') as $file) {
-                    $denah_rumah[] = $this->saveFile($file, 'denah_rumah');
+                    $saveddr = $this->saveFile($file, 'denah_rumah');
+                    $denah_rumah[] = $saveddr;
+                    $deleteFile[] = $saveddr;
                 }
             }
 
@@ -157,7 +174,7 @@ class pengajuanC extends Controller
                 'pengeluaran' => $request->pengeluaran,
                 'pengajuan_id' => $pengajuanId,
             ]);
-
+            // dd($request->jumlah_pembiayaan,$request->bentuk_pembiayaan,$request->sistem_pengembalian);
             $pembiayaan = pembiayaanM::create([
                 'jumlah_pembiayaan' => $request->jumlah_pembiayaan,
                 'jangka_waktu' => $request->jangka_waktu,
@@ -166,6 +183,7 @@ class pengajuanC extends Controller
                 'pengajuan_id' => $pengajuanId,
 
             ]);
+        // dd('samapai di sini berhasil');
 
             $jaminan = jaminanM::create([
                 'jaminan' => $request->jaminan,
@@ -233,6 +251,11 @@ class pengajuanC extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
+            foreach($deleteFile as $filepathdelete){
+                if(file_exists(public_path($filepathdelete))){
+                    unlink(public_path($filepathdelete));
+                }
+            }
             return back()->withErrors(['error' => 'Terjadi kesalahan saat menyimpan data.'])->withInput();
         }
         try {

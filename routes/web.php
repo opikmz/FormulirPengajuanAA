@@ -38,7 +38,11 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/user',[userC::class,'index'])->name('user')->middleware('auth')->middleware(['cekRole:admin']);
     Route::get('/create_user',[userC::class,'create'])->name('create_user')->middleware(['cekRole:admin']);
+    Route::get('/edit_user/{user}',[userC::class,'edit'])->name('edit_user')->middleware(['cekRole:admin']);
     Route::post('/store_user',[userC::class,'store'])->name('store_user')->middleware(['cekRole:admin']);
+    Route::post('/update_user/{user}',[userC::class,'update'])->name('update_user')->middleware(['cekRole:admin']);
+    Route::post('/update_password/{user}',[userC::class,'update_password'])->name('update_password')->middleware(['cekRole:admin']);
+    // Route::post('/reset_password/{user}',[userC::class,'reset_password'])->name('reset_password')->middleware(['cekRole:admin']);
     Route::get('/destroy_user/{user}',[userC::class,'destroy'])->name('destroy_user')->middleware(['cekRole:admin']);
 
 });

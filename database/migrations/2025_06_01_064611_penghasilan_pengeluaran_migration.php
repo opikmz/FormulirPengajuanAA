@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id('id_penghasilan_pengeluaran');
 
             $table->string('pekerjaan');
-            $table->decimal('pendapatan');
-            $table->decimal('pengeluaran');
+            $table->decimal('pendapatan',20, 2);
+            $table->decimal('pengeluaran',20, 2);
 
             $table->unsignedBigInteger('pengajuan_id');
             $table->foreign('pengajuan_id')

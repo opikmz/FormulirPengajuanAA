@@ -1,6 +1,13 @@
 @extends('layouts.main')
 @section('container')
 <div class="container-fluid">
+    @if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert" id="allert">
+        <i class="fa-solid fa-check  " style="font-size: 20px"></i>
+        <strong>Selamat </strong> {{ session('success') }}.
+
+    </div>
+    @endif
     @error('error')
     <div class="alert alert-danger d-flex align-items-center" role="alert">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
@@ -15,57 +22,60 @@
     </div>
     @enderror
     <!-- DataTales Example -->
+
     <div class="card shadow mb-0 my-3">
         <div class="card-header py-2 px-4 d-flex justify-content-between align-items-center">
-            <label for="" class="m-0 text-dark font-weight-bold"> <b>User</b> </label>
+            <div class="">
+                <label for="" class="m-0 text-dark font-weight-bold"> <b>Tabel User</b> </label>
+            </div>
             <a href="/create_user" class="btn btn-primary">Tambah</a>
         </div>
         <div class="card-body">
-                <table class="table table-bordered mb-0" id="dataTable" width="100%" cellspacing="0">
-                    <thead class="mb-0" style="margin: 0%;">
-                        <tr>
-                            <th>Nama</th>
-                            <th>username</th>
-                            <th>Role</th>
-                            <th>Cabang</th>
-                            <th>Aksi</th>
-                            {{-- @endif --}}
-                        </tr>
-                    </thead>
-                    <tbody class="mt-0">
-                        @foreach ($user as $u)
-                        {{-- @php
-                            $jumlahPembiyaan = App\Models\pembiayaanM::where('pengajuan_id',$p->id_pengajuan)->first();
-                        @endphp --}}
-                        <tr>
-                            <td>{{ $u->nama }}</td>
-                            <td>{{ $u->username }}</td>
-                            <td>{{ $u->role }}</td>
-                            <td>{{ $u->cabang }}</td>
-                            <td>
-                                <a href="/show_user/{{ $u->id_user }}" class="btn btn-primary">Lihat</a>
-                                <a href="/destroy_user/{{ $u->id_user }}" class="btn btn-danger">hapus</a>
-                            </td>
-                            {{-- @if (Auth::user()->role == 'manager')
-                            <td>
-                                <a href="/edit_produk/{{ $p->id_barang }}" class="btn btn-primary">edit</a>
-                                <a href="/destroy_produk/{{ $p->id_barang }}" class="btn btn-danger">hapus</a>
-                            </td>
-                            @endif
-                            @if (Auth::user()->role == 'admin')
-                            <td>
-                                <a href="/edit_produk/{{ $p->id_barang }}" class="btn btn-primary">edit</a>
-                                <a href="/destroy_produk/{{ $p->id_barang }}" class="btn btn-danger">hapus</a>
-                            </td>
-                            @endif --}}
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                {{--
-            </div> --}}
-        </div>
+            <table class="table table-bordered mb-0" id="dataTable" width="100%" cellspacing="0">
+                <thead class="mb-0" style="margin: 0%;">
+                    <tr>
+                        <th>Nama</th>
+                        <th>username</th>
+                        <th>Role</th>
+                        <th>Cabang</th>
+                        <th>Aksi</th>
+                        {{-- @endif --}}
+                    </tr>
+                </thead>
+                <tbody class="mt-0">
+                    @foreach ($user as $u)
+                    {{-- @php
+                    $jumlahPembiyaan = App\Models\pembiayaanM::where('pengajuan_id',$p->id_pengajuan)->first();
+                    @endphp --}}
+                    <tr>
+                        <td>{{ $u->nama }}</td>
+                        <td>{{ $u->username }}</td>
+                        <td>{{ $u->role }}</td>
+                        <td>{{ $u->cabang }}</td>
+                        <td>
+                            <a href="/edit_user/{{ $u->id_user }}" class="btn btn-primary">Edit</a>
+                            <a href="/destroy_user/{{ $u->id_user }}" class="btn btn-danger">hapus</a>
+                        </td>
+                        {{-- @if (Auth::user()->role == 'manager')
+                        <td>
+                            <a href="/edit_produk/{{ $p->id_barang }}" class="btn btn-primary">edit</a>
+                            <a href="/destroy_produk/{{ $p->id_barang }}" class="btn btn-danger">hapus</a>
+                        </td>
+                        @endif
+                        @if (Auth::user()->role == 'admin')
+                        <td>
+                            <a href="/edit_produk/{{ $p->id_barang }}" class="btn btn-primary">edit</a>
+                            <a href="/destroy_produk/{{ $p->id_barang }}" class="btn btn-danger">hapus</a>
+                        </td>
+                        @endif --}}
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            {{--
+        </div> --}}
     </div>
+</div>
 
 </div>
 @endsection

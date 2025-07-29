@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pembiayaan', function (Blueprint $table) {
             $table->id('id_pembiayaan');
-            $table->decimal('jumlah_pembiayaan');
+            $table->decimal('jumlah_pembiayaan',20, 2);
             $table->integer('jangka_waktu');
             $table->enum('sistem_pengembalian', ['harian', 'mingguan', 'bulanan', 'tangguh']);
             $table->enum('bentuk_pembiayaan', ['murobahah', 'mudhorobah', 'ijaroh', 'musyarokah', 'qurdul_hasan']);

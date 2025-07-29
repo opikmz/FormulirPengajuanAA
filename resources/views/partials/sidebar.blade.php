@@ -5,7 +5,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3"><sup>Kasir </sup> Muhitek</div>
+        <div class="sidebar-brand-text mx-3" style="text-transform:capitalize">SipAA</div>
     </a>
 
     <!-- Divider -->
@@ -23,7 +23,7 @@
 
     <!-- Pengajuan -->
     <div class="sidebar-heading">
-        Pengajuan
+        Tabel
     </div>
     <li class="nav-item {{ request()->is('pengajuan') ? 'active' : '' }}">
         <a class="nav-link" href="/pengajuan">

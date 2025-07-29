@@ -96,5 +96,26 @@ class DatabaseSeeder extends Seeder
             'role' => 'marketing',
             'cabang' => 'bantul',
         ]);
+        \App\Models\User::create([
+            'nama' => 'Marketing Kretek 1',
+            'username' => 'marketingkreteksatu',
+            'password' => Hash::make('marketingkreteksatu'),
+            'role' => 'marketing',
+            'cabang' => 'kretek',
+        ]);
+        \App\Models\User::create([
+            'nama' => 'Marketing Sanden 1',
+            'username' => 'marketingsandensatu',
+            'password' => Hash::make('marketingsandensatu'),
+            'role' => 'marketing',
+            'cabang' => 'sanden',
+        ]);
+        \App\Models\User::create([
+            'nama' => 'Marketing Piyungan 1',
+            'username' => 'marketingpiyunagansatu',
+            'password' => Hash::make('marketingpiyungansatu'),
+            'role' => 'marketing',
+            'cabang' => 'piyungan',
+        ]);
     }
 }

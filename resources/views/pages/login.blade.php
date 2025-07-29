@@ -42,28 +42,49 @@
         <!-- Outer Row -->
         <div class="row justify-content-center ">
 
-            <div class="col-xl-5 col-lg-12 col-md-4">
+            <div class="col-xl-9 col-lg-12 col-md-4">
 
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
-                        <div class="p-5">
-                            <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Masukan Username & Password!</h1>
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image">
+                                <img src="" alt="" srcset="">
                             </div>
-                            <form class="user" action="/actlogin" method="POST">
-                                @csrf
-                                <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" id="" aria-describedby=""
-                                        placeholder="Username" name="username" required>
+                            <div class="col">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h3 text-gray-900 mb-0  font-weight-bold">Login</h1>
+                                        <div class="mb-4 text-xs">Masukan username & password</div>
+
+                                    </div>
+                                    <form class="user" action="/actlogin" method="POST">
+                                        @csrf
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-user" id=""
+                                                aria-describedby="" placeholder="Username" name="username" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control form-control-user" id=""
+                                                placeholder="Password" name="password" required>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">Login</button>
+                                        {{--
+                                        <hr> --}}
+                                    </form>
+                                    <hr style="border: 1px dashed; ">
+                                    <div class="d-flex justify-content-center mt-5">
+                                        <div class=""></div>
+                                        <a href="" class="text-xs">Lupa Password</a>
+                                    </div>
+                                    <div class="d-flex justify-content-center ">
+                                        <div class=""></div>
+                                        <a href="" class="text-xs">Buat Akun</a>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control form-control-user" id=""
-                                        placeholder="Password" name="password" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-user btn-block">Login</button>
-                                <hr>
-                            </form>
+                            </div>
                         </div>
+
                     </div>
                 </div>
 

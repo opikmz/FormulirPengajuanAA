@@ -139,6 +139,7 @@
             </table>
         </div>
         @endif
+
         @if (Auth::user()->role === 'mancab')
         <div class="card-header py-2 px-4 d-flex justify-content-between align-items-center">
             <label for="" class="m-0 text-dark font-weight-bold"> <b>Pengajuan</b> </label>
@@ -178,6 +179,7 @@
             </table>
         </div>
         @endif
+
         @if (Auth::user()->role === 'marketing')
         <div class="card-header py-2 px-4 d-flex justify-content-between align-items-center">
             <div class="">
@@ -193,11 +195,11 @@
                 <thead class="mb-0" style="margin: 0%;">
                     <tr>
                         <th>No</th>
-                        <th class="col-3">Pengelola</th>
-                        <th>Nama</th>
+                        {{-- <th class="col-2">Pengelola</th> --}}
+                        <th class="col-3">Nama</th>
                         <th>Alamat</th>
                         <th>Jumlah Pembiayaan</th>
-                        <th>Aksi</th>
+                        <th class="col-1">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="mt-0">
@@ -213,41 +215,48 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         @if ($status->status === 'pengajuan')
-                        <td class="" style="opacity: 100%;">
+                        {{-- <td class="" style="opacity: 100%;">
                             <div class="">
                                 {{ $po->pengelola }}
                             </div>
                             <span class="bg-warning rounded-pill badge text-white">Pengajuan</span>
 
+                        </td> --}}
+                        <td>
+                            <div class="">
+                                {{ \Illuminate\Support\Str::limit($po->nama, 15) }}
+                            </div>
+                            <span class="bg-warning rounded-pill badge text-white">Pengajuan</span>
                         </td>
                         @endif
                         @if ($status->status === 'acc')
                         <div class="">
                             <td class=" text-dark" style="opacity: 100%;">
-                                <div class="">
+                                {{-- <div class="">
                                     {{ $po->pengelola }}
-                                </div>
+                                </div> --}}
                                 {{-- <div class="btn btn-primary rounded-pill">tes</div> --}}
-                                <span class="bg-primary rounded-pill badge text-white">ACC</span>
+                            <td>{{ \Illuminate\Support\Str::limit($po->nama, 15) }}</td>
+
+                            <span class="bg-primary rounded-pill badge text-white">ACC</span>
                             </td>
                         </div>
                         @endif
                         @if ($status->status === 'tidak_acc')
                         <td class="" style="">
-                            <div class="">
+                            {{-- <div class="">
                                 {{ $po->pengelola }}
-                            </div>
+                            </div> --}}
                             <span class="bg-danger rounded-pill badge text-white">Tidak ACC</span>
                         </td>
                         @endif
-                        <td>{{ $po->nama }}</td>
                         <td>
                             {{ \Illuminate\Support\Str::limit($po->alamat, 17) }}
                         </td>
                         <td>Rp.{{ $jumlahPembiyaan->jumlah_pembiayaan }}</td>
                         <td>
-                            <div class="d-flex justify-content-between">
-                                <div class="bg-primary px-3  py-1 rounded-lg">
+                            <div class="d-flex justify-content-between ">
+                                <div class="bg-primary px-3  py-1 rounded-lg m-0">
                                     <a href="/show_pengajuan/{{ $po->id_pengajuan }}"
                                         class="text-light font-weight-bold text-xs p-0 m-0">Lihat</a>
                                 </div>

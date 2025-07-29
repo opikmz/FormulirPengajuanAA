@@ -9,7 +9,7 @@
     </div>
     @endif
     <div class="row mb-3">
-
+        {{-- Jumlah pengajuan --}}
         @if (Auth::user()->role === 'mancab')
         <div class="col-12 col-lg-4 mb-2">
             <div class="card border-left-primary shadow h-100 py-2">
@@ -60,6 +60,8 @@
             </div>
         </div>
         @endif
+
+
         @if (Auth::user()->role === 'marketing')
         <div class="col-12 col-lg-4 mb-2">
             <div class="card border-left-primary shadow h-100 py-2">
@@ -114,6 +116,8 @@
             </div>
         </div>
         @endif
+
+
         @if (Auth::user()->role === 'admin' || Auth::user()->role === 'komite')
         <div class="col-12 col-lg-4 mb-2">
             <div class="card border-left-primary shadow h-100 py-2">
@@ -165,13 +169,13 @@
         </div>
         @endif
     </div>
+    {{-- End jumlah pengajuan --}}
 
-
-
-    {{-- Body --}}
-    @if (Auth::user()->role === 'komite')
+    {{-- Body Komite--}}
+    @if (Auth::user()->role === 'komite' || Auth::user()->role === 'admin')
     <div class="row">
-        <div class="col-12 col-lg-5">
+
+        <div class="col-12 col-lg-6">
             <div class="card shadow mb-0 my-3">
                 <div class="card-header py-2 px-4 d-flex justify-content-between align-items-center">
                     <label for="" class="m-0 text-dark font-weight-bold"> <b>Pengajuan Terbaru</b> </label>
@@ -217,32 +221,61 @@
                                 <div class="col-6">
                                     <span class="text-xs rounded-pill text-primary">Jumlah Pengajuan</span>
                                     <div class="text-md font-weight-bold mb-1 text-dark">
-                                        Rp.
-                                        {{-- {{$pembiayaanpmt->jumlah_pembiayaan }} --}}
                                         {{ \Illuminate\Support\Str::limit($pembiayaanpt->jumlah_pembiayaan, 15) }}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        {{-- <a href="" class="text-xs font-weight-bold text-primary text-uppercase mb-1">Taufik</a>
-                        --}}
-
-                        {{-- <div class=" text-lg font-weight-bold  mb-1 text-dark">Tessss</div> --}}
                     </div>
                     @endforeach
                     @endif
                 </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="card shadow mb-0 my-3">
+                <div class="card-header py-2 px-4 d-flex justify-content-between align-items-center">
+                    <label for="" class="m-0 text-dark font-weight-bold"> <b>Total     Cabang Terbanyak</b> </label>
+                </div>
+                <div class="card-body">
+                    @foreach ($pengajuanCabangTerbanyak as $pct)
+                    <div class="list-group"  style="border: none ">
+                        <div class="list-group-item py-2 ">
+                            <div class="row align-items-center">
+                                <div class="col-6 ">
+                                    <div class="col">
+                                        <div class="d-flex justify-start align-items-center">
+                                            <div class="bg-primary rounded-pill text-white px-2 mr-2">{{ $loop->iteration }}</div>
+                                            <div class="text-md font-weight-bold mb-1 text-dark">{{ $pct->cabang }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    {{-- <span class="text-xs rounded-pill text-primary">Jumlah Pengajuan</span> --}}
+                                    <div class="text-md font-weight-bold mb-1 text-dark">
+                                        {{ $pct->total_pembiayaan }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
 
             </div>
         </div>
+
     </div>
     @endif
+    {{-- End Body Komite --}}
+
+    {{-- Body Marketing --}}
     @if (Auth::user()->role === 'marketing')
     <div class="row">
         <div class="col-12 col-lg-6">
             <div class="card shadow mb-0 my-3">
                 <div class="card-header py-2 px-4 d-flex justify-content-between align-items-center">
-
                     <label for="" class="m-0 text-dark font-weight-bold"> <b>Pengajuan Terbaru</b> </label>
                 </div>
                 <div class="card-body">
@@ -251,9 +284,6 @@
                         <div class="mb-2">
                             <div class="">Data tidak ditemukan</div>
                         </div>
-                        {{-- <div class="">
-                            <a href="create_pengajuan" class="">Tambah</a>
-                        </div> --}}
                     </div>
                     @else
                     @foreach ($pengajuanMarketingTerbaru as $pmt)
@@ -292,16 +322,11 @@
                                     <span class="text-xs rounded-pill text-primary">Jumlah Pengajuan</span>
                                     <div class="text-md font-weight-bold mb-1 text-dark">
                                         Rp.
-                                        {{-- {{$pembiayaanpmt->jumlah_pembiayaan }} --}}
                                         {{ \Illuminate\Support\Str::limit($pembiayaanpmt->jumlah_pembiayaan, 15) }}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        {{-- <a href="" class="text-xs font-weight-bold text-primary text-uppercase mb-1">Taufik</a>
-                        --}}
-
-                        {{-- <div class=" text-lg font-weight-bold  mb-1 text-dark">Tessss</div> --}}
                     </div>
                     @endforeach
                     @endif
@@ -309,64 +334,75 @@
 
             </div>
         </div>
-        <div class="col-12 col-lg-6">
+    </div>
+    @endif
+    {{-- End body marketing --}}
 
-            <div class="card shadow my-3">
+
+    @if (Auth::user()->role === 'mancab')
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <div class="card shadow mb-0 my-3">
                 <div class="card-header py-2 px-4 d-flex justify-content-between align-items-center">
-                    <label for="" class="m-0 text-dark font-weight-bold"> <b>Pesan Komite Terbaru</b> </label>
+                    <label for="" class="m-0 text-dark font-weight-bold"> <b>Pengajuan Terbaru</b> </label>
                 </div>
                 <div class="card-body">
-                    @if(empty($pesanKomiteTerbaru) || $pesanKomiteTerbaru->count() == 0)
+                    {{-- @if(empty($pengajuanMarketingTerbaru) || $pengajuanMarketingTerbaru->count() == 0)
                     <div class="">
-                        <label for="" class="m-0 text-dark font-weight-bold"> <b>Pesan Tidak Ditemukan</b> </label>
+                        <div class="mb-2">
+                            <div class="">Data tidak ditemukan</div>
+                        </div>
                     </div>
                     @else
-                    @foreach ($pesanKomiteTerbaru as $pkt)
-
+                    @foreach ($pengajuanMarketingTerbaru as $pmt)
+                    @php
+                    $statuspmt = App\Models\komiteM::where('pengajuan_id',$pmt->id_pengajuan)->first();
+                    $pembiayaanpmt = App\Models\pembiayaanM::where('pengajuan_id',$pmt->id_pengajuan)->first();
+                    @endphp
                     <div class="list-group ">
                         <div class="list-group-item py-2">
                             <div class="row">
                                 <div class="col-6">
                                     <div class="col">
                                         <div class="">
-                                            <a href="/show_pengajuan/" class="text-xs font-weight-bold mb-1 text-dark">
-                                                {{ \Illuminate\Support\Str::limit($pkt->nama, 17) }}
+                                            <a href="/show_pengajuan/{{ $pmt->id_pengajuan }}"
+                                                class="text-xs font-weight-bold mb-1 text-dark">
+                                                {{ \Illuminate\Support\Str::limit($pmt->nama, 17) }}
                                             </a>
-                                            <div class="text-xs">{{ \Illuminate\Support\Str::limit($pkt->pesan_komite, 20) }}</div>
+                                        </div>
+                                        <div class="mt-0">
+                                            @if ($statuspmt->status === 'acc')
+                                            <span class="bg-primary text-xs rounded-pill badge text-white px-2">
+                                                ACC</span>
+                                            @elseif ($statuspmt->status === 'tidak_acc')
+                                            <span class="bg-danger text-xs rounded-pill badge text-white px-2">
+                                                Tidak ACC
+                                            </span>
+                                            @else
+                                            <span class="bg-warning text-xs rounded-pill badge text-white px-2">
+                                                Pengajuan
+                                            </span>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
-                                {{-- <div class="col-6">
+                                <div class="col-6">
                                     <span class="text-xs rounded-pill text-primary">Jumlah Pengajuan</span>
                                     <div class="text-md font-weight-bold mb-1 text-dark">
                                         Rp.
-                                        {{ \Illuminate\Support\Str::limit($pembiayaanpt->jumlah_pembiayaan, 15) }}
+                                        {{ \Illuminate\Support\Str::limit($pembiayaanpmt->jumlah_pembiayaan, 15) }}
                                     </div>
-                                </div> --}}
+                                </div>
                             </div>
                         </div>
-                        {{-- <a href="" class="text-xs font-weight-bold text-primary text-uppercase mb-1">Taufik</a>
-                        --}}
-
-                        {{-- <div class=" text-lg font-weight-bold  mb-1 text-dark">Tessss</div> --}}
                     </div>
                     @endforeach
-                    @endif
+                    @endif --}}
                 </div>
+
             </div>
-
         </div>
-
     </div>
     @endif
-    {{-- @if (Auth::user()->role === 'marketing')
-    <div class="card-shadow mb-0 my-3">
-        <div class="card-body">
-            <div class="list-group ">
-                <a href="list-group-item">tes</a>
-            </div>
-        </div>
-    </div>
-    @endif --}}
 </div>
 @endsection

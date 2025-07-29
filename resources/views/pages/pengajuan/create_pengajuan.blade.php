@@ -101,7 +101,7 @@
                             <option value="mudhorobah">Mudhorobah</option>
                             <option value="ijaroh">Ijaroh</option>
                             <option value="musyarokah">Musyarokah</option>
-                            <option value="qordul_hasan">Qordul Hasan</option>
+                            <option value="qurdul_hasan">Qordul Hasan</option>
                         </select>
                     </div>
 
